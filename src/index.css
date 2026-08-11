@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Segoe UI", sans-serif;
+  background: #f5f5f7;
+  color: #1a1a1a;
+}
+
+button {
+  font-family: inherit;
+}
+
+/*
+  TODO(design): 임시 값입니다. Figma Dev mode 토큰 나오면
+  이 파일을 디자인 시스템 토큰(색상/폰트/간격 변수)으로 교체하세요.
+*/
+:root {
+  --welli-primary: #ff7a45;
+  --welli-primary-dark: #e8632e;
+  --welli-error: #e53e3e;
+  --welli-border: #d9d9df;
+  --welli-text-muted: #6b6b76;
+}
