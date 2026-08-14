@@ -3,16 +3,17 @@
 }
 
 html,
-body,
-#root {
+body {
   height: 100%;
 }
 
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Segoe UI", sans-serif;
-  background: #f5f5f7;
   color: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  background: #d9d9df;
 }
 
 button {
@@ -29,4 +30,28 @@ button {
   --welli-error: #e53e3e;
   --welli-border: #d9d9df;
   --welli-text-muted: #6b6b76;
+}
+
+/*
+  화면 기본 비율 390:844 (모바일 프레임). 모든 화면은 이 안에 그려지므로
+  개별 페이지에서 별도로 신경 쓸 필요 없음. 실제 모바일(≤390px)에서는
+  화면 전체를 그대로 채움.
+*/
+#root {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100%;
+  margin: 0 auto;
+  background: #f5f5f7;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+@media (min-width: 391px) {
+  #root {
+    min-height: 844px;
+    box-shadow: 0 0 0 1px var(--welli-border);
+  }
 }
