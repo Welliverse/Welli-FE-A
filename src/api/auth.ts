@@ -1,7 +1,7 @@
 import { apiClient, ApiError, USE_MOCK } from "@/api/client";
 
 export interface AuthUser {
-  id: string;
+  user_id: string;
   email: string;
 }
 
@@ -22,7 +22,7 @@ function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-type MockUser = { id: string; email: string; password: string };
+type MockUser = { user_id: string; email: string; password: string };
 
 function loadMockUsers(): Record<string, MockUser> {
   const raw = localStorage.getItem(MOCK_USERS_KEY);
@@ -39,10 +39,10 @@ async function mockSignup({ email, password }: AuthCredentials): Promise<AuthRes
   if (users[email]) {
     throw new ApiError(409, "EMAIL_TAKEN", "이미 가입된 이메일입니다.");
   }
-  const id = crypto.randomUUID();
-  users[email] = { id, email, password };
+  const user_id = crypto.randomUUID();
+  users[email] = { user_id, email, password };
   saveMockUsers(users);
-  return { user: { id, email }, token: `mock-token-${id}` };
+  return { user: { user_id, email }, token: `mock-token-${user_id}` };
 }
 
 async function mockLogin({ email, password }: AuthCredentials): Promise<AuthResponse> {
@@ -52,7 +52,7 @@ async function mockLogin({ email, password }: AuthCredentials): Promise<AuthResp
   if (!found || found.password !== password) {
     throw new ApiError(401, "INVALID_CREDENTIALS", "이메일 또는 비밀번호가 올바르지 않습니다.");
   }
-  return { user: { id: found.id, email: found.email }, token: `mock-token-${found.id}` };
+  return { user: { user_id: found.user_id, email: found.email }, token: `mock-token-${found.user_id}` };
 }
 
 // FE-A 담당: 로그인/회원가입. BE 연동 전까지 USE_MOCK=true로 localStorage 기반 mock 인증 사용.
