@@ -21,7 +21,7 @@ interface RoutineItem {
 
 const INITIAL_ROUTINES: RoutineItem[] = [
   { key: "water", icon: waterIcon, title: "수분 섭취", subtitle: "물 2L 마시기", done: false },
-  { key: "sleep", icon: sleepIcon, title: "수면 습관", subtitle: "11시 전에 잠들기", done: true },
+  { key: "sleep", icon: sleepIcon, title: "수면 습관", subtitle: "11시 전에 잠들기", done: false },
   { key: "exercise", icon: exerciseIcon, title: "가벼운 운동", subtitle: "30분 걷기", done: false },
   { key: "emotion", icon: emotionIcon, title: "마음챙김", subtitle: "명상 10분 하기", done: false },
 ];

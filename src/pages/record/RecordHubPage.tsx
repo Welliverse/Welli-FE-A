@@ -28,7 +28,7 @@ const CATEGORIES: RecordCategory[] = [
   { key: "meal", label: "식사", icon: mealIcon, path: "/record/meal" },
 ];
 
-const DEFAULT_DONE_KEYS = ["skin", "sleep", "water", "emotion"];
+const DEFAULT_DONE_KEYS: string[] = [];
 
 // 오늘 기록 허브: 6개 기록 카테고리를 선택해 각 상세 기록 화면으로 진입. 체크 배지는 사용자가 직접 토글 가능.
 export default function RecordHubPage() {
