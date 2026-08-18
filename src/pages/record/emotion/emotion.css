@@ -1,0 +1,147 @@
+.emotion-content {
+  align-items: stretch;
+  flex: 1;
+}
+
+.emotion-question {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--welli-text-dark);
+  margin: 4px 0 0;
+}
+
+.emotion-mascot-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 12px 0;
+}
+
+.emotion-mascot {
+  width: 220px;
+  height: auto;
+}
+
+.emotion-label {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--welli-text-dark);
+  margin: 0;
+}
+
+.emotion-slider-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.emotion-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  appearance: none;
+  background: linear-gradient(90deg, #f2565b, #ffb020, #4dd18a);
+  outline: none;
+}
+
+.emotion-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--welli-card-border);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.emotion-slider::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--welli-card-border);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.emotion-slider-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--welli-text-muted);
+}
+
+/* ---------- 주간 감정 기록 ---------- */
+.emotion-summary-body {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 12px;
+}
+
+.emotion-summary-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.emotion-summary-face img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.emotion-summary-face p {
+  font-size: 12.5px;
+  color: var(--welli-text-muted);
+  text-align: center;
+  margin: 0;
+}
+
+.emotion-summary-stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  font-size: 13.5px;
+  color: var(--welli-text-dark);
+}
+
+.emotion-summary-stats li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.emotion-summary-stats li > span:first-child {
+  display: inline-flex;
+  align-items: center;
+}
+
+.emotion-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.emotion-dot--good {
+  background: var(--welli-good);
+}
+
+.emotion-dot--neutral {
+  background: var(--welli-neutral);
+}
+
+.emotion-dot--bad {
+  background: var(--welli-bad);
+}

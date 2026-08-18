@@ -1,6 +1,7 @@
 node_modules
 dist
 dist-ssr
+Welli_poto/
 *.local
 .env
 .env.local

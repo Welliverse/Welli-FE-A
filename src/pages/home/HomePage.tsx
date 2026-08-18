@@ -55,7 +55,8 @@ export default function HomePage() {
         <HomeToolbar
           active="home"
           onSelect={(key) => {
-            if (key === "my") navigate("/mypage");
+            if (key === "record") navigate("/record");
+            else if (key === "my") navigate("/mypage");
             else if (key !== "home") showNotReady();
           }}
         />

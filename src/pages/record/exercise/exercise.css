@@ -1,0 +1,191 @@
+.exercise-subtitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--welli-text-dark);
+  margin: 0 0 10px;
+}
+
+.exercise-type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.exercise-type-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 4px;
+  border: 1px solid var(--welli-card-border);
+  border-radius: 14px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--welli-text-muted);
+  font-weight: 600;
+}
+
+.exercise-type-emoji {
+  font-size: 22px;
+}
+
+.exercise-type-card--active {
+  background: var(--welli-purple);
+  border-color: var(--welli-purple);
+  color: #fff;
+}
+
+.exercise-duration-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  background: #fff;
+  border: 1px solid var(--welli-card-border);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.exercise-stepper-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--welli-purple-light);
+  color: var(--welli-purple-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.exercise-duration-value {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--welli-text-dark);
+}
+
+.exercise-duration-value small {
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+.exercise-duration-presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.exercise-preset-chip {
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--welli-card-border);
+  background: #f7f7fb;
+  color: var(--welli-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.exercise-preset-chip--active {
+  background: var(--welli-purple);
+  border-color: var(--welli-purple);
+  color: #fff;
+}
+
+.exercise-intensity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.exercise-intensity-chip {
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--welli-card-border);
+  background: #f7f7fb;
+  color: var(--welli-text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.exercise-intensity-chip--active {
+  background: var(--welli-purple-pale);
+  border-color: var(--welli-purple);
+  color: var(--welli-purple-dark);
+}
+
+.exercise-calorie-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--welli-bad-bg);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.exercise-calorie-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--welli-bad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.exercise-calorie-label {
+  font-size: 13px;
+  color: var(--welli-text-muted);
+  margin: 0 0 2px;
+}
+
+.exercise-calorie-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--welli-text-dark);
+  margin: 0;
+}
+
+.exercise-calorie-value small {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ---------- 주간 운동 기록 ---------- */
+.exercise-highlight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exercise-highlight-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--welli-card-border);
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 13.5px;
+}
+
+.exercise-highlight-icon {
+  font-size: 18px;
+}
+
+.exercise-highlight-text {
+  flex: 1;
+  color: var(--welli-text-dark);
+}
+
+.exercise-highlight-value {
+  color: var(--welli-purple-dark);
+  font-weight: 700;
+}

@@ -1,0 +1,86 @@
+.record-hub-content {
+  padding-top: 28px;
+}
+
+.record-hub-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.record-hub-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--welli-text-dark);
+  margin: 0 0 6px;
+}
+
+.record-hub-subtitle {
+  font-size: 14px;
+  color: var(--welli-text-muted);
+  margin: 0;
+}
+
+.record-hub-badge {
+  flex-shrink: 0;
+  background: var(--welli-purple-light);
+  color: var(--welli-purple-dark);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.record-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.record-hub-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  aspect-ratio: 1;
+  border: 1.5px solid var(--welli-card-border);
+  border-radius: 16px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.record-hub-card--done {
+  border-color: var(--welli-purple);
+  background: var(--welli-purple-pale);
+}
+
+.record-hub-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--welli-purple);
+  color: #fff;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.record-hub-icon {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.record-hub-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--welli-text-dark);
+}

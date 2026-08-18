@@ -4,7 +4,7 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -40,6 +40,20 @@ button {
   --welli-disabled-text: #6e6f70;
   --welli-gray-90: #6e6f70;
   --welli-warning: #ff5a67;
+
+  /* 기록 화면(Welli_poto) 전용 별칭/상태 팔레트 — 위 기본 토큰에 맞춰 매핑 */
+  --welli-purple: var(--welli-primary);
+  --welli-purple-dark: var(--welli-primary-dark);
+  --welli-purple-light: var(--welli-purple-20);
+  --welli-purple-pale: var(--welli-purple-10);
+  --welli-card-border: var(--welli-border);
+  --welli-text-dark: #1a1a1a;
+  --welli-good: #4dd18a;
+  --welli-good-bg: #dff5e8;
+  --welli-neutral: #ffb020;
+  --welli-neutral-bg: #fdedd3;
+  --welli-bad: #f2565b;
+  --welli-bad-bg: #fbdede;
 }
 
 /*
