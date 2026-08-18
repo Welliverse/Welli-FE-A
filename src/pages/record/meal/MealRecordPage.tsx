@@ -4,12 +4,17 @@ import { DetailHeader } from "@/components/layout/DetailHeader";
 import { DateChip } from "@/components/layout/DateChip";
 import { PhotoCaptureArea } from "@/components/layout/PhotoCaptureArea";
 import { formatMonthDay } from "@/pages/history/dateUtils";
+import mealViewfinder from "@/assets/icons/meal-viewfinder.png";
+import mealThumb1 from "@/assets/icons/meal-thumb-1.png";
+import mealThumb2 from "@/assets/icons/meal-thumb-2.png";
+import mealThumb3 from "@/assets/icons/meal-thumb-3.png";
+import mealThumb4 from "@/assets/icons/meal-thumb-4.png";
 
 const RECENT_PHOTOS = [
-  { key: "1", emoji: "🍢" },
-  { key: "2", emoji: "🥣" },
-  { key: "3", emoji: "🍛" },
-  { key: "4", emoji: "🥪" },
+  { key: "1", src: mealThumb1 },
+  { key: "2", src: mealThumb2 },
+  { key: "3", src: mealThumb3 },
+  { key: "4", src: mealThumb4 },
 ];
 
 export default function MealRecordPage() {
@@ -23,7 +28,7 @@ export default function MealRecordPage() {
       <div className="page-content">
         <DateChip label={todayLabel} />
         <PhotoCaptureArea
-          previewEmoji="🥗"
+          previewSrc={mealViewfinder}
           recentPhotos={RECENT_PHOTOS}
           onCapture={() => navigate("/record/meal/result")}
         />
