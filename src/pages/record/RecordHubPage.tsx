@@ -34,7 +34,6 @@ const DEFAULT_DONE_KEYS = ["skin", "sleep", "water", "emotion"];
 export default function RecordHubPage() {
   const navigate = useNavigate();
   const [doneKeys, setDoneKeys] = useState<Set<string>>(() => new Set(DEFAULT_DONE_KEYS));
-  const [notice, setNotice] = useState<string | null>(null);
   const todayLabel = useMemo(() => `${formatMonthDay(new Date())} · 오늘`, []);
 
   function toggleDone(key: string) {
@@ -44,11 +43,6 @@ export default function RecordHubPage() {
       else next.add(key);
       return next;
     });
-  }
-
-  function showNotReady() {
-    setNotice("아직 준비 중인 화면이에요.");
-    window.setTimeout(() => setNotice(null), 1500);
   }
 
   return (
@@ -95,15 +89,13 @@ export default function RecordHubPage() {
         </div>
       </div>
 
-      {notice && <p className="home-toast">{notice}</p>}
-
       <div className="home-toolbar-wrap">
         <HomeToolbar
           active="record"
           onSelect={(key) => {
             if (key === "home") navigate("/home");
+            else if (key === "routine") navigate("/routine");
             else if (key === "my") navigate("/mypage");
-            else if (key !== "record") showNotReady();
           }}
         />
       </div>

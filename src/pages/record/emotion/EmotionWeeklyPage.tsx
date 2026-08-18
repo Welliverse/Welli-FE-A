@@ -35,7 +35,6 @@ const DAY_PATTERNS: { value: number; mood: MoodLevel; note: string }[] = [
 
 export default function EmotionWeeklyPage() {
   const navigate = useNavigate();
-  const [notice, setNotice] = useState<string | null>(null);
   const [period, setPeriod] = useState<Period>("주간");
   const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
 
@@ -52,11 +51,6 @@ export default function EmotionWeeklyPage() {
   const goodCount = weekDays.filter((d) => d.mood === "good").length;
   const neutralCount = weekDays.filter((d) => d.mood === "neutral").length;
   const badCount = weekDays.filter((d) => d.mood === "bad").length;
-
-  function showNotReady() {
-    setNotice("아직 준비 중인 화면이에요.");
-    window.setTimeout(() => setNotice(null), 1500);
-  }
 
   return (
     <div className="page">
@@ -128,15 +122,13 @@ export default function EmotionWeeklyPage() {
         </section>
       </div>
 
-      {notice && <p className="home-toast">{notice}</p>}
-
       <div className="home-toolbar-wrap">
         <HomeToolbar
           active="record"
           onSelect={(key) => {
             if (key === "home") navigate("/home");
+            else if (key === "routine") navigate("/routine");
             else if (key === "my") navigate("/mypage");
-            else if (key !== "record") showNotReady();
           }}
         />
       </div>

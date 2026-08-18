@@ -128,7 +128,8 @@ export default function MyPage() {
           active="my"
           onSelect={(key) => {
             if (key === "home") navigate("/home");
-            else if (key !== "my") showNotReady();
+            else if (key === "record") navigate("/record");
+            else if (key === "routine") navigate("/routine");
           }}
         />
       </div>

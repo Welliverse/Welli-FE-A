@@ -19,6 +19,9 @@ import MealResultPage from "@/pages/record/meal/MealResultPage";
 import MealWeeklyPage from "@/pages/record/meal/MealWeeklyPage";
 import SkinRecordPage from "@/pages/record/skin/SkinRecordPage";
 import SkinResultPage from "@/pages/record/skin/SkinResultPage";
+import RoutinePage from "@/pages/routine/RoutinePage";
+import RoutineCompletePage from "@/pages/routine/RoutineCompletePage";
+import RoutineIncompletePage from "@/pages/routine/RoutineIncompletePage";
 import { useAuthStore } from "@/store/authStore";
 
 function RequireAuth() {
@@ -57,6 +60,9 @@ export const router = createBrowserRouter([
       { path: "/record/meal/weekly", element: <MealWeeklyPage /> },
       { path: "/record/skin", element: <SkinRecordPage /> },
       { path: "/record/skin/result", element: <SkinResultPage /> },
+      { path: "/routine", element: <RoutinePage /> },
+      { path: "/routine/complete", element: <RoutineCompletePage /> },
+      { path: "/routine/incomplete", element: <RoutineIncompletePage /> },
     ],
   },
   { path: "*", element: <Navigate to="/" replace /> },

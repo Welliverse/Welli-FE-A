@@ -30,7 +30,6 @@ const DIET_SUMMARY = [
 
 export default function MealWeeklyPage() {
   const navigate = useNavigate();
-  const [notice, setNotice] = useState<string | null>(null);
   const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
 
   const weekLabels = getWeekdayLabels();
@@ -42,11 +41,6 @@ export default function MealWeeklyPage() {
       }),
     [weekStart, weekLabels],
   );
-
-  function showNotReady() {
-    setNotice("아직 준비 중인 화면이에요.");
-    window.setTimeout(() => setNotice(null), 1500);
-  }
 
   return (
     <div className="page">
@@ -102,15 +96,13 @@ export default function MealWeeklyPage() {
         </section>
       </div>
 
-      {notice && <p className="home-toast">{notice}</p>}
-
       <div className="home-toolbar-wrap">
         <HomeToolbar
           active="record"
           onSelect={(key) => {
             if (key === "home") navigate("/home");
+            else if (key === "routine") navigate("/routine");
             else if (key === "my") navigate("/mypage");
-            else if (key !== "record") showNotReady();
           }}
         />
       </div>
