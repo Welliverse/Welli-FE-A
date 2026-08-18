@@ -2,17 +2,24 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DetailHeader } from "@/components/layout/DetailHeader";
 import { DateChip } from "@/components/layout/DateChip";
-import { FlameIcon, MinusIcon, PlusIcon } from "@/components/icons";
+import { MinusIcon, PlusIcon } from "@/components/icons";
 import { formatMonthDay } from "@/pages/history/dateUtils";
+import iconWalk from "@/assets/icons/exercise-walk.png";
+import iconRun from "@/assets/icons/exercise-run.png";
+import iconBike from "@/assets/icons/exercise-bike.png";
+import iconWeight from "@/assets/icons/exercise-weight.png";
+import iconYoga from "@/assets/icons/exercise-yoga.png";
+import iconEtc from "@/assets/icons/exercise-etc.png";
+import calorieIcon from "@/assets/icons/exercise-calorie.png";
 import "@/pages/record/exercise/exercise.css";
 
 const EXERCISE_TYPES = [
-  { key: "walk", label: "걷기", emoji: "🚶", rate: 4 },
-  { key: "run", label: "달리기", emoji: "🏃", rate: 7.1 },
-  { key: "bike", label: "자전거", emoji: "🚴", rate: 6 },
-  { key: "weight", label: "웨이트", emoji: "🏋️", rate: 5.5 },
-  { key: "yoga", label: "요가", emoji: "🧘", rate: 3 },
-  { key: "etc", label: "기타", emoji: "⋯", rate: 4 },
+  { key: "walk", label: "걷기", icon: iconWalk, rate: 4 },
+  { key: "run", label: "달리기", icon: iconRun, rate: 7.1 },
+  { key: "bike", label: "자전거", icon: iconBike, rate: 6 },
+  { key: "weight", label: "웨이트", icon: iconWeight, rate: 5.5 },
+  { key: "yoga", label: "요가", icon: iconYoga, rate: 3 },
+  { key: "etc", label: "기타", icon: iconEtc, rate: 4 },
 ] as const;
 
 const DURATION_PRESETS = [15, 30, 45, 60];
@@ -53,7 +60,10 @@ export default function ExerciseRecordPage() {
                 className={`exercise-type-card ${type === item.key ? "exercise-type-card--active" : ""}`}
                 onClick={() => setType(item.key)}
               >
-                <span className="exercise-type-emoji">{item.emoji}</span>
+                <span
+                  className="exercise-type-icon"
+                  style={{ WebkitMaskImage: `url(${item.icon})`, maskImage: `url(${item.icon})` }}
+                />
                 <span>{item.label}</span>
               </button>
             ))}
@@ -115,9 +125,7 @@ export default function ExerciseRecordPage() {
         </section>
 
         <div className="exercise-calorie-box">
-          <span className="exercise-calorie-icon">
-            <FlameIcon size={24} />
-          </span>
+          <img src={calorieIcon} alt="" className="exercise-calorie-icon" />
           <div>
             <p className="exercise-calorie-label">예상 소모 칼로리</p>
             <p className="exercise-calorie-value">

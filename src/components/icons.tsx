@@ -72,14 +72,3 @@ export function SunIcon({ size = 22, className }: IconProps) {
     </svg>
   );
 }
-
-export function FlameIcon({ size = 22, className }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-      <path
-        d="M12 2c1 3-3 4.5-3 8a3 3 0 006 0c0-1-1-1.5-1-1.5s2 .5 2 3.5a5 5 0 11-10 0c0-4.5 4-5.5 4-8.5C10 3 11 2.3 12 2z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}

@@ -125,6 +125,10 @@
   color: var(--welli-purple-dark);
 }
 
+.sleep-quality-card--active img {
+  filter: sepia(1) saturate(6) hue-rotate(-10deg) brightness(1.05);
+}
+
 /* ---------- TimePickerSheet ---------- */
 .sheet-backdrop {
   position: absolute;
