@@ -5,6 +5,9 @@ import OnboardingPage from "@/pages/onboarding/OnboardingPage";
 import CharacterCreationPage from "@/pages/character/CharacterCreationPage";
 import HomePage from "@/pages/home/HomePage";
 import MyPage from "@/pages/mypage/MyPage";
+import WaterHistoryPage from "@/pages/history/WaterHistoryPage";
+import ExerciseHistoryPage from "@/pages/history/ExerciseHistoryPage";
+import SleepHistoryPage from "@/pages/history/SleepHistoryPage";
 import { useAuthStore } from "@/store/authStore";
 
 function RequireAuth() {
@@ -29,6 +32,9 @@ export const router = createBrowserRouter([
       { path: "/character-creation", element: <CharacterCreationPage /> },
       { path: "/home", element: <HomePage /> },
       { path: "/mypage", element: <MyPage /> },
+      { path: "/history/water", element: <WaterHistoryPage /> },
+      { path: "/history/exercise", element: <ExerciseHistoryPage /> },
+      { path: "/history/sleep", element: <SleepHistoryPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/" replace /> },
