@@ -108,6 +108,7 @@
 .sleep-quality-card img {
   width: 32px;
   height: 32px;
+  filter: grayscale(1);
 }
 
 .sleep-quality-card span {
