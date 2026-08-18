@@ -2,7 +2,8 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DetailHeader } from "@/components/layout/DetailHeader";
 import { DateChip } from "@/components/layout/DateChip";
-import { PlusIcon } from "@/components/icons";
+import { MinusIcon, PlusIcon } from "@/components/icons";
+import { formatMonthDay } from "@/pages/history/dateUtils";
 import waterGlassLarge from "@/assets/icons/water-glass-large.png";
 import waterCupHalf from "@/assets/icons/water-cup-half.png";
 import waterCupFull from "@/assets/icons/water-cup-full.png";
@@ -20,6 +21,7 @@ const QUICK_ADD = [
 export default function WaterRecordPage() {
   const navigate = useNavigate();
   const [amount, setAmount] = useState(1500);
+  const todayLabel = useMemo(() => `${formatMonthDay(new Date())} · 오늘`, []);
 
   const nearestMark = useMemo(() => {
     const rounded = Math.round(amount / 500) * 500;
@@ -31,7 +33,7 @@ export default function WaterRecordPage() {
       <DetailHeader title="물 섭취 기록" onCalendarClick={() => navigate("/history/water")} />
 
       <div className="page-content">
-        <DateChip label="8월 10일 · 오늘" />
+        <DateChip label={todayLabel} />
 
         <div className="water-amount">
           <span className="water-amount-value">
@@ -59,14 +61,24 @@ export default function WaterRecordPage() {
                 <img src={item.icon} alt={item.label} className="water-quick-icon" />
                 <span className="water-quick-label">{item.label}</span>
                 <span className="water-quick-ml">{item.ml}ml</span>
-                <button
-                  type="button"
-                  className="water-quick-add-btn"
-                  onClick={() => setAmount((prev) => Math.min(GOAL_ML, prev + item.ml))}
-                  aria-label={`${item.label} 추가`}
-                >
-                  <PlusIcon size={16} />
-                </button>
+                <div className="water-quick-actions">
+                  <button
+                    type="button"
+                    className="water-quick-btn water-quick-btn--minus"
+                    onClick={() => setAmount((prev) => Math.max(0, prev - item.ml))}
+                    aria-label={`${item.label} 빼기`}
+                  >
+                    <MinusIcon size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    className="water-quick-btn water-quick-btn--plus"
+                    onClick={() => setAmount((prev) => Math.min(GOAL_ML, prev + item.ml))}
+                    aria-label={`${item.label} 추가`}
+                  >
+                    <PlusIcon size={16} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>

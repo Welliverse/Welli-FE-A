@@ -30,7 +30,7 @@
 }
 
 .water-illustration-img {
-  width: 140px;
+  width: 172px;
   height: auto;
 }
 
@@ -90,8 +90,13 @@
   color: var(--welli-text-muted);
 }
 
-.water-quick-add-btn {
+.water-quick-actions {
   margin-top: 6px;
+  display: flex;
+  gap: 6px;
+}
+
+.water-quick-btn {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -102,4 +107,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.water-quick-btn--minus {
+  background: #f1f1f5;
+  color: var(--welli-text-muted);
 }

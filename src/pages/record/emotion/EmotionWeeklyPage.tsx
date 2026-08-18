@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DetailHeader } from "@/components/layout/DetailHeader";
-import { PeriodTabs } from "@/components/layout/PeriodTabs";
+import { PeriodTabs, type Period } from "@/components/layout/PeriodTabs";
 import { WeekNav } from "@/components/layout/WeekNav";
 import { WeeklyChart, type WeeklyChartDay, type MoodLevel } from "@/components/layout/WeeklyChart";
 import HomeToolbar from "@/pages/home/HomeToolbar";
+import { addDays, formatWeekRange, getWeekStart, getWeekdayLabels } from "@/pages/history/dateUtils";
 import dogFaceGood from "@/assets/icons/dog-face-good.png";
 import dogFaceNeutral from "@/assets/icons/dog-face-neutral.png";
 import dogFaceBad from "@/assets/icons/dog-face-bad.png";
@@ -21,23 +22,36 @@ const MOOD_FACE: Record<MoodLevel, string> = {
   bad: dogFaceBad,
 };
 
-const WEEK_DAYS: EmotionDay[] = [
-  { label: "일", date: "8/4", value: 90, mood: "good", note: "기분이 좋았어요!" },
-  { label: "월", date: "8/5", value: 40, mood: "bad", note: "화가 났어요." },
-  { label: "화", date: "8/6", value: 60, mood: "neutral", note: "평온한 하루였어요." },
-  { label: "수", date: "8/7", value: 38, mood: "bad", note: "화가 났어요." },
-  { label: "목", date: "8/8", value: 88, mood: "good", note: "기분이 좋았어요!" },
-  { label: "금", date: "8/9", value: 58, mood: "neutral", note: "평온한 하루였어요." },
-  { label: "토", date: "8/10", value: 55, mood: "neutral", note: "평온한 하루였어요." },
+// 일~토 요일별 데모 패턴(감정 값/코멘트). 실제 날짜는 이번 주 기준으로 매번 계산됨.
+const DAY_PATTERNS: { value: number; mood: MoodLevel; note: string }[] = [
+  { value: 90, mood: "good", note: "기분이 좋았어요!" },
+  { value: 40, mood: "bad", note: "화가 났어요." },
+  { value: 60, mood: "neutral", note: "평온한 하루였어요." },
+  { value: 38, mood: "bad", note: "화가 났어요." },
+  { value: 88, mood: "good", note: "기분이 좋았어요!" },
+  { value: 58, mood: "neutral", note: "평온한 하루였어요." },
+  { value: 55, mood: "neutral", note: "평온한 하루였어요." },
 ];
-
-const GOOD_COUNT = WEEK_DAYS.filter((d) => d.mood === "good").length;
-const NEUTRAL_COUNT = WEEK_DAYS.filter((d) => d.mood === "neutral").length;
-const BAD_COUNT = WEEK_DAYS.filter((d) => d.mood === "bad").length;
 
 export default function EmotionWeeklyPage() {
   const navigate = useNavigate();
   const [notice, setNotice] = useState<string | null>(null);
+  const [period, setPeriod] = useState<Period>("주간");
+  const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
+
+  const weekLabels = getWeekdayLabels();
+  const weekDays: EmotionDay[] = useMemo(
+    () =>
+      DAY_PATTERNS.map((pattern, i) => {
+        const date = addDays(weekStart, i);
+        return { label: weekLabels[i], date: `${date.getMonth() + 1}/${date.getDate()}`, ...pattern };
+      }),
+    [weekStart, weekLabels],
+  );
+
+  const goodCount = weekDays.filter((d) => d.mood === "good").length;
+  const neutralCount = weekDays.filter((d) => d.mood === "neutral").length;
+  const badCount = weekDays.filter((d) => d.mood === "bad").length;
 
   function showNotReady() {
     setNotice("아직 준비 중인 화면이에요.");
@@ -49,11 +63,19 @@ export default function EmotionWeeklyPage() {
       <DetailHeader title="주간 감정 기록" />
 
       <div className="page-content weekly-header">
-        <PeriodTabs />
-        <WeekNav label="8월 4일 - 8월 10일" />
+        <PeriodTabs value={period} onChange={setPeriod} enabledPeriods={["주간", "월간", "연간"]} />
+        {period === "주간" ? (
+          <WeekNav
+            label={formatWeekRange(weekStart)}
+            onPrev={() => setWeekStart((prev) => addDays(prev, -7))}
+            onNext={() => setWeekStart((prev) => addDays(prev, 7))}
+          />
+        ) : (
+          <p className="emotion-period-notice">{period} 감정 데이터는 아직 준비 중이에요.</p>
+        )}
 
         <div className="card">
-          <WeeklyChart days={WEEK_DAYS} />
+          <WeeklyChart days={weekDays} />
         </div>
 
         <div className="card emotion-summary-card">
@@ -72,19 +94,19 @@ export default function EmotionWeeklyPage() {
                 <span>
                   <span className="emotion-dot emotion-dot--good" /> 좋았던 날
                 </span>
-                <b>{GOOD_COUNT}일</b>
+                <b>{goodCount}일</b>
               </li>
               <li>
                 <span>
                   <span className="emotion-dot emotion-dot--neutral" /> 보통이었던 날
                 </span>
-                <b>{NEUTRAL_COUNT}일</b>
+                <b>{neutralCount}일</b>
               </li>
               <li>
                 <span>
                   <span className="emotion-dot emotion-dot--bad" /> 힘들었던 날
                 </span>
-                <b>{BAD_COUNT}일</b>
+                <b>{badCount}일</b>
               </li>
             </ul>
           </div>
@@ -95,7 +117,7 @@ export default function EmotionWeeklyPage() {
             요일별 감정 기록
           </h2>
           <div className="day-mood-list">
-            {WEEK_DAYS.map((day) => (
+            {weekDays.map((day) => (
               <div className="day-mood-row" key={day.date}>
                 <span className="day-mood-tag">{day.label}</span>
                 <img src={MOOD_FACE[day.mood]} alt="" />

@@ -65,12 +65,20 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--welli-purple);
+  border: 1.5px solid var(--welli-card-border);
+  background: #fff;
   color: #fff;
   font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.record-hub-check--done {
+  border-color: var(--welli-purple);
+  background: var(--welli-purple);
 }
 
 .record-hub-icon {

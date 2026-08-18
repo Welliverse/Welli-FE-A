@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DetailHeader } from "@/components/layout/DetailHeader";
 import { DateChip } from "@/components/layout/DateChip";
+import { formatMonthDay } from "@/pages/history/dateUtils";
 import mascotHappy from "@/assets/mascots/mascot-happy.png";
 import mascotSad from "@/assets/mascots/mascot-sad.png";
 import "@/pages/record/emotion/emotion.css";
@@ -18,13 +19,14 @@ export default function EmotionRecordPage() {
   }, [value]);
 
   const mascot = value >= 50 ? mascotHappy : mascotSad;
+  const todayLabel = useMemo(() => `${formatMonthDay(new Date())} · 오늘`, []);
 
   return (
     <div className="page">
       <DetailHeader title="감정 기록" onCalendarClick={() => navigate("/record/emotion/weekly")} />
 
       <div className="page-content emotion-content">
-        <DateChip label="8월 10일 · 오늘" />
+        <DateChip label={todayLabel} />
 
         <h2 className="emotion-question">오늘 기분이 어떠신가요?</h2>
 

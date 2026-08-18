@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { DetailHeader } from "@/components/layout/DetailHeader";
 import { DateChip } from "@/components/layout/DateChip";
 import { FlameIcon, MinusIcon, PlusIcon } from "@/components/icons";
+import { formatMonthDay } from "@/pages/history/dateUtils";
 import "@/pages/record/exercise/exercise.css";
 
 const EXERCISE_TYPES = [
@@ -32,13 +33,14 @@ export default function ExerciseRecordPage() {
     const mult = INTENSITY_OPTIONS.find((i) => i.key === intensity)?.mult ?? 1;
     return Math.round(rate * duration * mult);
   }, [type, duration, intensity]);
+  const todayLabel = useMemo(() => `${formatMonthDay(new Date())} · 오늘`, []);
 
   return (
     <div className="page">
       <DetailHeader title="운동 기록" onCalendarClick={() => navigate("/history/exercise")} />
 
       <div className="page-content">
-        <DateChip label="8월 10일 · 오늘" />
+        <DateChip label={todayLabel} />
         <h2 className="page-section-title">오늘 어떤 운동을 했나요?</h2>
 
         <section>

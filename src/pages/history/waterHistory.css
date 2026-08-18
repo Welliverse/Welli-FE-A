@@ -153,6 +153,19 @@
   background: var(--welli-warning);
 }
 
+.water-history-bar-face {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+}
+
 .water-history-bar-day {
   margin-top: 2px;
   font-size: 13px;

@@ -75,6 +75,16 @@
 }
 
 /* ---------- 주간 감정 기록 ---------- */
+.emotion-period-notice {
+  text-align: center;
+  font-size: 13px;
+  color: var(--welli-text-muted);
+  background: #f7f7fb;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 0;
+}
+
 .emotion-summary-body {
   display: flex;
   align-items: center;

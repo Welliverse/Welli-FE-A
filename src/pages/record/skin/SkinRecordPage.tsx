@@ -1,7 +1,9 @@
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { DetailHeader } from "@/components/layout/DetailHeader";
 import { DateChip } from "@/components/layout/DateChip";
 import { PhotoCaptureArea } from "@/components/layout/PhotoCaptureArea";
+import { formatMonthDay } from "@/pages/history/dateUtils";
 import viewfinder from "@/assets/icons/viewfinder.png";
 import skinThumb1 from "@/assets/icons/skin-thumb-1.png";
 import skinThumb2 from "@/assets/icons/skin-thumb-2.png";
@@ -17,13 +19,14 @@ const RECENT_PHOTOS = [
 
 export default function SkinRecordPage() {
   const navigate = useNavigate();
+  const todayLabel = useMemo(() => `${formatMonthDay(new Date())} · 오늘`, []);
 
   return (
     <div className="page">
       <DetailHeader title="피부 상태 기록" />
 
       <div className="page-content">
-        <DateChip label="8월 10일 · 오늘" />
+        <DateChip label={todayLabel} />
         <PhotoCaptureArea
           previewSrc={viewfinder}
           recentPhotos={RECENT_PHOTOS}

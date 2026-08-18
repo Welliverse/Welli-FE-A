@@ -4,6 +4,7 @@ import { DetailHeader } from "@/components/layout/DetailHeader";
 import { DateChip } from "@/components/layout/DateChip";
 import { ChevronRightIcon, SunIcon } from "@/components/icons";
 import { TimePickerSheet, type TimeValue } from "@/pages/record/sleep/TimePickerSheet";
+import { formatMonthDay } from "@/pages/history/dateUtils";
 import sleepMoonIcon from "@/assets/icons/sleep.png";
 import moodTired from "@/assets/icons/mood-tired.png";
 import moodOkay from "@/assets/icons/mood-okay.png";
@@ -41,13 +42,14 @@ export default function SleepRecordPage() {
 
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
+  const todayLabel = useMemo(() => `${formatMonthDay(new Date())} · 오늘`, []);
 
   return (
     <div className="page">
       <DetailHeader title="수면 기록" onCalendarClick={() => navigate("/history/sleep")} />
 
       <div className="page-content">
-        <DateChip label="8월 10일 · 오늘" />
+        <DateChip label={todayLabel} />
         <h2 className="page-section-title sleep-title">어젯밤 수면을 기록해요</h2>
 
         <div className="card sleep-time-card">

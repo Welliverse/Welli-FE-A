@@ -7,10 +7,12 @@ export type Period = (typeof PERIODS)[number];
 interface PeriodTabsProps {
   value?: Period;
   onChange?: (period: Period) => void;
+  /** 실제로 클릭 가능하게 둘 기간. 나머지는 데이터가 없어 비활성 처리. 기본값은 주간만 활성화. */
+  enabledPeriods?: Period[];
 }
 
-// 주간/월간/연간 토글. 월간·연간 데이터는 아직 없어 주간만 실제 동작하고 나머지는 비활성 처리.
-export function PeriodTabs({ value = "주간", onChange }: PeriodTabsProps) {
+// 주간/월간/연간 토글. enabledPeriods에 없는 기간은 데이터가 없어 비활성 처리.
+export function PeriodTabs({ value = "주간", onChange, enabledPeriods = ["주간"] }: PeriodTabsProps) {
   const [selected, setSelected] = useState<Period>(value);
 
   return (
@@ -20,7 +22,7 @@ export function PeriodTabs({ value = "주간", onChange }: PeriodTabsProps) {
           key={period}
           type="button"
           className={`period-tab ${selected === period ? "period-tab--active" : ""}`}
-          disabled={period !== "주간"}
+          disabled={!enabledPeriods.includes(period)}
           onClick={() => {
             setSelected(period);
             onChange?.(period);

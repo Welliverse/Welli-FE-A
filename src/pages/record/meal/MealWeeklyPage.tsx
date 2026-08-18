@@ -1,22 +1,24 @@
-import { useState, type CSSProperties } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { DetailHeader } from "@/components/layout/DetailHeader";
 import { PeriodTabs } from "@/components/layout/PeriodTabs";
 import { WeekNav } from "@/components/layout/WeekNav";
-import { WeeklyChart, type WeeklyChartDay } from "@/components/layout/WeeklyChart";
+import { WeeklyChart, type WeeklyChartDay, type MoodLevel } from "@/components/layout/WeeklyChart";
 import HomeToolbar from "@/pages/home/HomeToolbar";
+import { addDays, formatWeekRange, getWeekStart, getWeekdayLabels } from "@/pages/history/dateUtils";
 import "@/pages/home/home.css";
 import "@/pages/record/weekly-shared.css";
 import "@/pages/record/meal/meal.css";
 
-const WEEK_DAYS: WeeklyChartDay[] = [
-  { label: "일", date: "8/4", value: 85, mood: "good" },
-  { label: "월", date: "8/5", value: 38, mood: "bad" },
-  { label: "화", date: "8/6", value: 55, mood: "neutral" },
-  { label: "수", date: "8/7", value: 34, mood: "bad" },
-  { label: "목", date: "8/8", value: 82, mood: "good" },
-  { label: "금", date: "8/9", value: 58, mood: "neutral" },
-  { label: "토", date: "8/10", value: 60, mood: "neutral" },
+// 요일별 데모 패턴(식사 점수). 실제 날짜는 이번 주 기준으로 매번 계산됨.
+const DAY_PATTERNS: { value: number; mood: MoodLevel }[] = [
+  { value: 85, mood: "good" },
+  { value: 38, mood: "bad" },
+  { value: 55, mood: "neutral" },
+  { value: 34, mood: "bad" },
+  { value: 82, mood: "good" },
+  { value: 58, mood: "neutral" },
+  { value: 60, mood: "neutral" },
 ];
 
 const DIET_SUMMARY = [
@@ -29,6 +31,17 @@ const DIET_SUMMARY = [
 export default function MealWeeklyPage() {
   const navigate = useNavigate();
   const [notice, setNotice] = useState<string | null>(null);
+  const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
+
+  const weekLabels = getWeekdayLabels();
+  const weekDays: WeeklyChartDay[] = useMemo(
+    () =>
+      DAY_PATTERNS.map((pattern, i) => {
+        const date = addDays(weekStart, i);
+        return { label: weekLabels[i], date: `${date.getMonth() + 1}/${date.getDate()}`, ...pattern };
+      }),
+    [weekStart, weekLabels],
+  );
 
   function showNotReady() {
     setNotice("아직 준비 중인 화면이에요.");
@@ -41,11 +54,15 @@ export default function MealWeeklyPage() {
 
       <div className="page-content weekly-header">
         <PeriodTabs />
-        <WeekNav label="8월 4일 - 8월 10일" />
+        <WeekNav
+          label={formatWeekRange(weekStart)}
+          onPrev={() => setWeekStart((prev) => addDays(prev, -7))}
+          onNext={() => setWeekStart((prev) => addDays(prev, 7))}
+        />
 
         <div className="card">
           <h2 className="page-section-title">이번 주 식사 요약</h2>
-          <WeeklyChart days={WEEK_DAYS} />
+          <WeeklyChart days={weekDays} />
         </div>
 
         <section>
