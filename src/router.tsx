@@ -4,6 +4,7 @@ import SignupPage from "@/pages/auth/SignupPage";
 import OnboardingPage from "@/pages/onboarding/OnboardingPage";
 import CharacterCreationPage from "@/pages/character/CharacterCreationPage";
 import HomePage from "@/pages/home/HomePage";
+import MyPage from "@/pages/mypage/MyPage";
 import { useAuthStore } from "@/store/authStore";
 
 function RequireAuth() {
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
       { path: "/onboarding", element: <OnboardingPage /> },
       { path: "/character-creation", element: <CharacterCreationPage /> },
       { path: "/home", element: <HomePage /> },
+      { path: "/mypage", element: <MyPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/" replace /> },

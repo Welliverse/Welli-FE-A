@@ -1,36 +1,65 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
+import welliLogo from "@/assets/welli-logo.svg";
+import characterWave from "@/assets/character-wave.png";
+import homeBackground from "@/assets/home-background.png";
+import { BellIcon } from "@/pages/home/HomeIcons";
+import HomeCarousel from "@/pages/home/HomeCarousel";
+import HomeToolbar from "@/pages/home/HomeToolbar";
+import ConditionCard from "@/pages/home/ConditionCard";
+import RoutineCard from "@/pages/home/RoutineCard";
+import NextLevelCard from "@/pages/home/NextLevelCard";
+import { mockCondition, mockRoutines, mockLevel } from "@/pages/home/homeMockData";
 import "@/pages/home/home.css";
 
-// 임시 홈 화면 — 캐릭터 상태 시각화, 오늘의 추천 루틴 등 실제 디자인은 다음 작업에서 교체 예정.
 export default function HomePage() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
+  const [notice, setNotice] = useState<string | null>(null);
 
-  function handleLogout() {
-    logout();
-    navigate("/login");
+  function showNotReady() {
+    setNotice("아직 준비 중인 화면이에요.");
+    window.setTimeout(() => setNotice(null), 1500);
   }
 
   return (
     <div className="home-page">
+      <div className="home-bg" aria-hidden="true">
+        <img src={homeBackground} alt="" />
+      </div>
       <header className="home-header">
-        <p className="home-greeting">{user?.nickname ?? "회원"}님, 안녕하세요 👋</p>
-        <button type="button" className="home-logout" onClick={handleLogout}>
-          로그아웃
-        </button>
+        <img src={welliLogo} alt="Welli" className="home-logo" />
+        <div className="home-header-actions">
+          <button type="button" className="home-icon-btn" aria-label="알림" onClick={showNotReady}>
+            <BellIcon />
+          </button>
+        </div>
       </header>
 
-      <section className="home-card">
-        <p className="home-card-title">캐릭터</p>
-        <p className="home-card-desc">캐릭터 상태 표시는 홈 화면 디자인이 나오면 반영될 예정이에요.</p>
-      </section>
+      <div className="home-character">
+        <img src={characterWave} alt={user?.nickname ?? "웰리"} />
+      </div>
 
-      <section className="home-card">
-        <p className="home-card-title">오늘의 추천 루틴</p>
-        <p className="home-card-desc">기록을 남기면 맞춤 루틴이 여기에 표시돼요.</p>
-      </section>
+      {notice && <p className="home-toast">{notice}</p>}
+
+      <HomeCarousel
+        pages={[
+          <ConditionCard key="condition" data={mockCondition} />,
+          <RoutineCard key="routine" items={mockRoutines} onViewAll={showNotReady} />,
+          <NextLevelCard key="level" data={mockLevel} />,
+        ]}
+      />
+
+      <div className="home-toolbar-wrap">
+        <HomeToolbar
+          active="home"
+          onSelect={(key) => {
+            if (key === "my") navigate("/mypage");
+            else if (key !== "home") showNotReady();
+          }}
+        />
+      </div>
     </div>
   );
 }

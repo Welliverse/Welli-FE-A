@@ -98,18 +98,21 @@ export default function AgeStep({ age, onChange, onNext }: AgeStepProps) {
           />
           <span className="age-value-unit">세</span>
         </div>
-        <div className="age-wheel" ref={wheelRef} onScroll={handleWheelScroll}>
-          <div style={{ height: WHEEL_PAD }} />
-          {AGE_OPTIONS.map((option) => (
-            <div
-              key={option}
-              className={`age-wheel-item${option === age ? " active" : ""}`}
-              onClick={() => selectAge(option)}
-            >
-              {option}
-            </div>
-          ))}
-          <div style={{ height: WHEEL_PAD }} />
+        <div className="age-wheel-wrap">
+          <div className="age-wheel-highlight" aria-hidden="true" />
+          <div className="age-wheel" ref={wheelRef} onScroll={handleWheelScroll}>
+            <div style={{ height: WHEEL_PAD }} />
+            {AGE_OPTIONS.map((option) => (
+              <div
+                key={option}
+                className={`age-wheel-item${option === age ? " active" : ""}`}
+                onClick={() => selectAge(option)}
+              >
+                {option}
+              </div>
+            ))}
+            <div style={{ height: WHEEL_PAD }} />
+          </div>
         </div>
       </div>
     </OnboardingLayout>

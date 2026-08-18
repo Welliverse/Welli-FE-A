@@ -217,7 +217,25 @@
   color: var(--welli-primary);
 }
 
+.age-wheel-wrap {
+  position: relative;
+}
+
+.age-wheel-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 86px;
+  height: 43px;
+  border-radius: 8px;
+  background: var(--welli-purple-10);
+  border-top: 1px solid var(--welli-purple-20);
+  border-bottom: 1px solid var(--welli-purple-20);
+  pointer-events: none;
+}
+
 .age-wheel {
+  position: relative;
   height: 215px;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
