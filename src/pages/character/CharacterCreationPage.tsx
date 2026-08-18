@@ -1,6 +1,7 @@
 import { useEffect, useState, type KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { characterApi, type CharacterInfo } from "@/api/character";
+import { ApiError } from "@/api/client";
 import characterOrb from "@/assets/character-orb.png";
 import "@/pages/character/character.css";
 
@@ -10,6 +11,8 @@ export default function CharacterCreationPage() {
   const navigate = useNavigate();
   const [character, setCharacter] = useState<CharacterInfo | null>(null);
   const [progress, setProgress] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameDraft, setNameDraft] = useState("");
 
@@ -26,19 +29,32 @@ export default function CharacterCreationPage() {
     }
     raf = requestAnimationFrame(tick);
 
-    characterApi.create().then((data) => {
-      if (cancelled) return;
-      setProgress(100);
-      setTimeout(() => {
-        if (!cancelled) setCharacter(data);
-      }, 300);
-    });
+    characterApi
+      .create()
+      .then((data) => {
+        if (cancelled) return;
+        setProgress(100);
+        setTimeout(() => {
+          if (!cancelled) setCharacter(data);
+        }, 300);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        cancelAnimationFrame(raf);
+        setError(err instanceof ApiError ? err.message : "캐릭터 생성에 실패했어요. 잠시 후 다시 시도해주세요.");
+      });
 
     return () => {
       cancelled = true;
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [retryKey]);
+
+  function handleRetry() {
+    setError(null);
+    setProgress(0);
+    setRetryKey((prev) => prev + 1);
+  }
 
   function startEditName() {
     if (!character) return;
@@ -54,6 +70,22 @@ export default function CharacterCreationPage() {
 
   function handleNameKeyDown(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") e.currentTarget.blur();
+  }
+
+  if (error) {
+    return (
+      <div className="character-page">
+        <h1 className="character-title">캐릭터를 만들지 못했어요</h1>
+        <div className="character-orb-wrap">
+          <p className="character-loading-text">{error}</p>
+        </div>
+        <div className="character-loading-footer">
+          <button type="button" className="character-start-btn" onClick={handleRetry}>
+            다시 시도
+          </button>
+        </div>
+      </div>
+    );
   }
 
   if (!character) {

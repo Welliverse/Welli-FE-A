@@ -31,7 +31,7 @@ async function mockUpdateProfile(payload: UpdateProfileRequest): Promise<void> {
   if (!payload.age || payload.age < 1) {
     throw new ApiError(400, "INVALID_AGE", "나이를 확인해주세요.");
   }
-  const userId = useAuthStore.getState().user?.user_id;
+  const userId = useAuthStore.getState().user?.userId;
   if (userId) markMockOnboardingCompleted(userId);
   localStorage.setItem("welli_mock_profile", JSON.stringify(payload));
 }
