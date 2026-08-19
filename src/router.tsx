@@ -14,12 +14,10 @@ import MealHistoryPage from "@/pages/history/MealHistoryPage";
 import RecordHubPage from "@/pages/record/RecordHubPage";
 import WaterRecordPage from "@/pages/record/water/WaterRecordPage";
 import EmotionRecordPage from "@/pages/record/emotion/EmotionRecordPage";
-import EmotionWeeklyPage from "@/pages/record/emotion/EmotionWeeklyPage";
 import SleepRecordPage from "@/pages/record/sleep/SleepRecordPage";
 import ExerciseRecordPage from "@/pages/record/exercise/ExerciseRecordPage";
 import MealRecordPage from "@/pages/record/meal/MealRecordPage";
 import MealResultPage from "@/pages/record/meal/MealResultPage";
-import MealWeeklyPage from "@/pages/record/meal/MealWeeklyPage";
 import SkinRecordPage from "@/pages/record/skin/SkinRecordPage";
 import SkinResultPage from "@/pages/record/skin/SkinResultPage";
 import RoutinePage from "@/pages/routine/RoutinePage";
@@ -61,12 +59,10 @@ export const router = createBrowserRouter([
       { path: "/record", element: <RecordHubPage /> },
       { path: "/record/water", element: <WaterRecordPage /> },
       { path: "/record/emotion", element: <EmotionRecordPage /> },
-      { path: "/record/emotion/weekly", element: <EmotionWeeklyPage /> },
       { path: "/record/sleep", element: <SleepRecordPage /> },
       { path: "/record/exercise", element: <ExerciseRecordPage /> },
       { path: "/record/meal", element: <MealRecordPage /> },
       { path: "/record/meal/result", element: <MealResultPage /> },
-      { path: "/record/meal/weekly", element: <MealWeeklyPage /> },
       { path: "/record/skin", element: <SkinRecordPage /> },
       { path: "/record/skin/result", element: <SkinResultPage /> },
       { path: "/routine", element: <RoutinePage /> },

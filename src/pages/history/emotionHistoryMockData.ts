@@ -29,3 +29,22 @@ export function generateWeekData(weekStart: Date): DailyEmotionRecord[] {
     return { day, date: `${date.getMonth() + 1}/${date.getDate()}`, status };
   });
 }
+
+export function computeWeeklyEmotionSummary(records: DailyEmotionRecord[]) {
+  const goodCount = records.filter((r) => r.status === "good").length;
+  const normalCount = records.filter((r) => r.status === "normal").length;
+  const badCount = records.filter((r) => r.status === "bad").length;
+  const overall: DayStatus =
+    goodCount >= normalCount && goodCount >= badCount
+      ? "good"
+      : normalCount >= badCount
+        ? "normal"
+        : "bad";
+  return { goodCount, normalCount, badCount, overall };
+}
+
+export function getEmotionOverallMessage(overall: DayStatus) {
+  if (overall === "good") return "좋은 한 주였어요!";
+  if (overall === "normal") return "무난한 한 주였어요!";
+  return "힘든 한 주였어요";
+}

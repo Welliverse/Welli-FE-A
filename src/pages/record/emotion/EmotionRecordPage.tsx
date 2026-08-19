@@ -23,7 +23,7 @@ export default function EmotionRecordPage() {
 
   return (
     <div className="page">
-      <DetailHeader title="감정 기록" onCalendarClick={() => navigate("/record/emotion/weekly")} />
+      <DetailHeader title="감정 기록" onCalendarClick={() => navigate("/history/emotion")} />
 
       <div className="page-content emotion-content">
         <DateChip label={todayLabel} />

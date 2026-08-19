@@ -3,31 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
 import welliLogo from "@/assets/welli-logo.svg";
 import characterWave from "@/assets/character-wave.png";
-import homeBgDay from "@/assets/home-bg-day.png";
-import homeBgEvening from "@/assets/home-bg-evening.png";
-import homeBgNight from "@/assets/home-bg-night.png";
 import { BellIcon, MoonIcon } from "@/pages/home/HomeIcons";
 import HomeToolbar from "@/pages/home/HomeToolbar";
 import ConditionCard from "@/pages/home/ConditionCard";
 import RoutineCard from "@/pages/home/RoutineCard";
 import NextLevelCard from "@/pages/home/NextLevelCard";
 import { mockCondition, mockRoutines, mockLevel, mockDailyMessage } from "@/pages/home/homeMockData";
+import { TIME_BACKGROUNDS, getTimeOfDay } from "@/pages/home/timeOfDay";
 import "@/pages/home/home.css";
-
-type TimeOfDay = "day" | "evening" | "night";
-
-const TIME_BACKGROUNDS: Record<TimeOfDay, string> = {
-  day: homeBgDay,
-  evening: homeBgEvening,
-  night: homeBgNight,
-};
-
-function getTimeOfDay(): TimeOfDay {
-  const hour = new Date().getHours();
-  if (hour >= 6 && hour < 18) return "day";
-  if (hour >= 18 && hour < 20) return "evening";
-  return "night";
-}
 
 export default function HomePage() {
   const navigate = useNavigate();

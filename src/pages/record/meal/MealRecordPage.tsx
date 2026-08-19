@@ -23,7 +23,7 @@ export default function MealRecordPage() {
 
   return (
     <div className="page">
-      <DetailHeader title="식사 기록" onCalendarClick={() => navigate("/record/meal/weekly")} />
+      <DetailHeader title="식사 기록" onCalendarClick={() => navigate("/history/meal")} />
 
       <div className="page-content">
         <DateChip label={todayLabel} />
