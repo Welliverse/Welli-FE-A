@@ -1,0 +1,143 @@
+.skin-result-date {
+  font-size: 13px;
+  color: var(--welli-text-muted);
+  margin: 0;
+}
+
+.skin-result-header {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.skin-result-thumb {
+  width: 84px;
+  height: 84px;
+  border-radius: 14px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.skin-result-score-label {
+  font-size: 12.5px;
+  color: var(--welli-text-muted);
+  margin: 0 0 4px;
+}
+
+.skin-result-score {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--welli-purple);
+  margin: 0;
+}
+
+.skin-result-score small {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--welli-text-muted);
+}
+
+.skin-result-score-tag {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--welli-text-dark);
+  margin: 2px 0;
+}
+
+.skin-result-score-desc {
+  font-size: 12px;
+  color: var(--welli-text-muted);
+  margin: 0;
+}
+
+.skin-detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skin-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.skin-detail-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.skin-detail-label {
+  width: 44px;
+  font-size: 13.5px;
+  color: var(--welli-text-dark);
+  flex-shrink: 0;
+}
+
+.skin-detail-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: #ececf5;
+  overflow: hidden;
+}
+
+.skin-detail-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--welli-purple);
+}
+
+.skin-detail-fill--bad {
+  background: var(--welli-neutral);
+}
+
+.skin-detail-status {
+  width: 34px;
+  text-align: right;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--welli-purple-dark);
+  flex-shrink: 0;
+}
+
+.skin-detail-status--bad {
+  color: var(--welli-neutral);
+}
+
+.skin-comment-card {
+  background: var(--welli-purple-pale);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.skin-comment-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--welli-text-dark);
+  margin: 0 0 8px;
+}
+
+.skin-comment-desc {
+  font-size: 12.5px;
+  color: var(--welli-text-muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.skin-care-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skin-care-tag {
+  background: #fff;
+  border: 1px solid var(--welli-card-border);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--welli-text-dark);
+  font-weight: 600;
+}

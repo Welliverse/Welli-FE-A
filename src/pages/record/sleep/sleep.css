@@ -1,0 +1,209 @@
+.sleep-title {
+  margin-top: 4px;
+}
+
+.sleep-time-card {
+  padding: 6px 18px;
+}
+
+.sleep-time-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sleep-time-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.sleep-time-icon--sun {
+  color: #ffb020;
+}
+
+.sleep-time-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sleep-time-label {
+  font-size: 13px;
+  color: var(--welli-text-muted);
+}
+
+.sleep-time-value {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--welli-text-dark);
+}
+
+.sleep-time-chevron {
+  color: #c7c7d1;
+}
+
+.sleep-time-divider {
+  height: 1px;
+  background: var(--welli-card-border);
+}
+
+.sleep-total-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--welli-purple-pale);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.sleep-total-label {
+  font-size: 13px;
+  color: var(--welli-purple-dark);
+  font-weight: 600;
+}
+
+.sleep-total-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--welli-purple-dark);
+}
+
+.sleep-total-delta {
+  font-size: 12.5px;
+  color: var(--welli-purple-dark);
+  opacity: 0.8;
+}
+
+.sleep-quality-title {
+  margin-bottom: 12px;
+}
+
+.sleep-quality-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.sleep-quality-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 4px;
+  border: 1.5px solid var(--welli-card-border);
+  border-radius: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.sleep-quality-card img {
+  width: 32px;
+  height: 32px;
+  filter: grayscale(1);
+}
+
+.sleep-quality-card span {
+  font-size: 12px;
+  color: var(--welli-text-muted);
+  font-weight: 600;
+}
+
+.sleep-quality-card--active {
+  border-color: var(--welli-purple);
+  background: var(--welli-purple-pale);
+}
+
+.sleep-quality-card--active span {
+  color: var(--welli-purple-dark);
+}
+
+.sleep-quality-card--active img {
+  filter: sepia(1) saturate(6) hue-rotate(-10deg) brightness(1.05);
+}
+
+/* ---------- TimePickerSheet ---------- */
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: flex-end;
+  z-index: 20;
+}
+
+.sheet {
+  width: 100%;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 10px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--welli-card-border);
+  align-self: center;
+}
+
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sheet-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--welli-text-dark);
+}
+
+.sheet-text-btn {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--welli-text-muted);
+  cursor: pointer;
+  padding: 6px;
+}
+
+.sheet-text-btn--primary {
+  color: var(--welli-purple-dark);
+  font-weight: 700;
+}
+
+.sheet-picker-row {
+  display: flex;
+  gap: 10px;
+}
+
+.sheet-select {
+  flex: 1;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--welli-card-border);
+  background: var(--welli-purple-pale);
+  color: var(--welli-text-dark);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.sheet-preview {
+  text-align: center;
+  font-size: 13px;
+  color: var(--welli-text-muted);
+  margin: 0;
+}

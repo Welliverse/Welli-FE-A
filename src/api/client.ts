@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/store/authStore";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "/api";
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "/api";
 
 // BE API 준비 전까지는 mock으로 동작. .env에 VITE_USE_MOCK=false 넣으면 실제 API 호출.
 export const USE_MOCK = import.meta.env.VITE_USE_MOCK !== "false";
@@ -56,7 +56,15 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   }
 
   if (res.status === 204) return undefined as T;
-  return res.json() as Promise<T>;
+  // 일부 BE 엔드포인트는 200이면서 바디가 비어 있거나(PATCH /users/me/profile),
+  // JSON이 아닌 순수 텍스트를 그대로 내려준다(예: /auth/signup은
+  // Content-Type: text/plain으로 인용부호 없는 문자열을 반환) — 이런 경우
+  // JSON.parse가 곧바로 파싱 에러를 던지므로 Content-Type을 먼저 확인한다.
+  const text = await res.text();
+  if (!text) return undefined as T;
+  const contentType = res.headers.get("content-type") ?? "";
+  if (!contentType.includes("application/json")) return text as unknown as T;
+  return JSON.parse(text) as T;
 }
 
 export const apiClient = {

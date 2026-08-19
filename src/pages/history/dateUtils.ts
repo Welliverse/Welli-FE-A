@@ -29,6 +29,10 @@ export function formatWeekRange(weekStart: Date): string {
   return `${startText} - ${endText}`;
 }
 
+export function formatMonthDay(date: Date): string {
+  return `${date.getMonth() + 1}월 ${date.getDate()}일`;
+}
+
 export function formatMonthYear(date: Date): string {
   return `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
 }

@@ -2,26 +2,28 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeToolbar from "@/pages/home/HomeToolbar";
 import HistoryCalendar from "@/pages/history/HistoryCalendar";
-import { generateWeekData, computeWaterStats } from "@/pages/history/waterHistoryMockData";
+import { generateWeekData, computeWaterStats, type DayStatus } from "@/pages/history/waterHistoryMockData";
 import { addDays, formatWeekRange, getWeekStart } from "@/pages/history/dateUtils";
+import dogFaceGood from "@/assets/icons/dog-face-good.png";
+import dogFaceNeutral from "@/assets/icons/dog-face-neutral.png";
+import dogFaceBad from "@/assets/icons/dog-face-bad.png";
 import "@/pages/home/home.css";
 import "@/pages/history/waterHistory.css";
 
 const CHART_MAX_ML = 2500;
+const STATUS_FACE: Record<DayStatus, string> = {
+  good: dogFaceGood,
+  normal: dogFaceNeutral,
+  bad: dogFaceBad,
+};
 
 export default function WaterHistoryPage() {
   const navigate = useNavigate();
-  const [notice, setNotice] = useState<string | null>(null);
   const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
   const [calendarOpen, setCalendarOpen] = useState(false);
 
   const weekRecords = useMemo(() => generateWeekData(weekStart), [weekStart]);
   const stats = useMemo(() => computeWaterStats(weekRecords), [weekRecords]);
-
-  function showNotReady() {
-    setNotice("아직 준비 중인 화면이에요.");
-    window.setTimeout(() => setNotice(null), 1500);
-  }
 
   function goToPrevWeek() {
     setWeekStart((prev) => addDays(prev, -7));
@@ -78,6 +80,7 @@ export default function WaterHistoryPage() {
                     className={`water-history-bar-fill water-history-bar-fill--${record.status}`}
                     style={{ height: `${Math.min(100, (record.valueMl / CHART_MAX_ML) * 100)}%` }}
                   />
+                  <img src={STATUS_FACE[record.status]} alt="" className="water-history-bar-face" />
                 </div>
                 <span className="water-history-bar-day">{record.day}</span>
                 <span className="water-history-bar-date">{record.date}</span>
@@ -121,15 +124,13 @@ export default function WaterHistoryPage() {
           </div>
         </div>
 
-        {notice && <p className="home-toast">{notice}</p>}
-
         <div className="home-toolbar-wrap">
           <HomeToolbar
             active="record"
             onSelect={(key) => {
               if (key === "home") navigate("/home");
+              else if (key === "routine") navigate("/routine");
               else if (key === "my") navigate("/mypage");
-              else if (key !== "record") showNotReady();
             }}
           />
         </div>

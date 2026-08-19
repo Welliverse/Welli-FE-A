@@ -44,7 +44,7 @@ export default function MyPage() {
 
   const topMenuItems = [{ key: "account", label: "내 계정", Icon: AccountIcon, onClick: showNotReady }];
   const bottomMenuItems = [
-    { key: "report", label: "분석 리포트", Icon: ReportIcon, onClick: showNotReady },
+    { key: "report", label: "분석 리포트", Icon: ReportIcon, onClick: () => navigate("/report/loading") },
     { key: "settings", label: "설정", Icon: SettingsIcon, onClick: showNotReady },
     { key: "support", label: "고객센터", Icon: SupportIcon, onClick: showNotReady },
     { key: "logout", label: "로그아웃", Icon: LogoutIcon, onClick: handleLogout },
@@ -130,7 +130,8 @@ export default function MyPage() {
           active="my"
           onSelect={(key) => {
             if (key === "home") navigate("/home");
-            else if (key !== "my") showNotReady();
+            else if (key === "record") navigate("/record");
+            else if (key === "routine") navigate("/routine");
           }}
         />
       </div>
