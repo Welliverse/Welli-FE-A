@@ -1,4 +1,4 @@
-.water-history-page {
+.meal-history-page {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -9,26 +9,26 @@
   -ms-overflow-style: none;
 }
 
-.water-history-page::-webkit-scrollbar {
+.meal-history-page::-webkit-scrollbar {
   display: none;
 }
 
 /* 달력이 펼쳐져 내용이 길어지면 툴바가 화면 밖으로 밀려날 수 있어,
    이 화면에서는 툴바를 스크롤 컨테이너 하단에 고정한다. */
-.water-history-page .home-toolbar-wrap {
+.meal-history-page .home-toolbar-wrap {
   position: sticky;
   bottom: 0;
   padding-bottom: 24px;
   background: var(--welli-input-bg);
 }
 
-.water-history-header {
+.meal-history-header {
   display: flex;
   align-items: center;
   padding: 14px 32px;
 }
 
-.water-history-back {
+.meal-history-back {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,7 +43,7 @@
   cursor: pointer;
 }
 
-.water-history-header h1 {
+.meal-history-header h1 {
   flex: 1;
   margin: 0;
   text-align: center;
@@ -53,15 +53,15 @@
   color: var(--welli-purple-100);
 }
 
-.water-history-header-spacer {
+.meal-history-header-spacer {
   width: 27px;
 }
 
-.water-history-date-section {
+.meal-history-date-section {
   margin-top: 16px;
 }
 
-.water-history-lower-section {
+.meal-history-lower-section {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -70,14 +70,14 @@
   border-radius: 16px 16px 0 0;
 }
 
-.water-history-date-nav {
+.meal-history-date-nav {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 24px;
 }
 
-.water-history-date-nav button {
+.meal-history-date-nav button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,7 +90,7 @@
   cursor: pointer;
 }
 
-.water-history-date-nav .water-history-date-label {
+.meal-history-date-nav .meal-history-date-label {
   font-size: 15px;
   font-weight: 500;
   letter-spacing: -0.15px;
@@ -98,7 +98,7 @@
   cursor: pointer;
 }
 
-.water-history-section-title {
+.meal-history-section-title {
   margin: 24px 32px 0;
   font-size: 18px;
   font-weight: 600;
@@ -106,7 +106,7 @@
   color: #000;
 }
 
-.water-history-chart-card {
+.meal-history-chart-card {
   margin: 12px 32px 0;
   padding: 16px 12px;
   border-radius: 12px;
@@ -117,12 +117,12 @@
   gap: 16px;
 }
 
-.water-history-bars {
+.meal-history-bars {
   display: flex;
   gap: 12px;
 }
 
-.water-history-bar-col {
+.meal-history-bar-col {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -130,48 +130,59 @@
   gap: 6px;
 }
 
-.water-history-bar-track {
+.meal-history-bar-track {
   position: relative;
   width: 100%;
-  height: 160px;
-  border-radius: 16px;
+  height: 180px;
+  border-radius: 20px;
   overflow: hidden;
-  background: var(--welli-disabled-bg);
 }
 
-.water-history-bar-fill {
+.meal-history-bar-track--good {
+  background: #dff5e7;
+}
+
+.meal-history-bar-track--normal {
+  background: #ffeac8;
+}
+
+.meal-history-bar-track--bad {
+  background: #ffdee1;
+}
+
+.meal-history-bar-fill {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 16px;
+  border-radius: 20px;
 }
 
-.water-history-bar-fill--good {
+.meal-history-bar-fill--good {
   background: #4cce7b;
 }
 
-.water-history-bar-fill--normal {
+.meal-history-bar-fill--normal {
   background: #ffb84c;
 }
 
-.water-history-bar-fill--bad {
+.meal-history-bar-fill--bad {
   background: var(--welli-warning);
 }
 
-.water-history-bar-day {
+.meal-history-bar-day {
   margin-top: 2px;
   font-size: 13px;
   font-weight: 500;
   color: #000;
 }
 
-.water-history-bar-date {
+.meal-history-bar-date {
   font-size: 11px;
   color: var(--welli-text-muted);
 }
 
-.water-history-legend {
+.meal-history-legend {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -180,7 +191,7 @@
   background: var(--welli-input-bg);
 }
 
-.water-history-legend-item {
+.meal-history-legend-item {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -189,28 +200,28 @@
   color: var(--welli-gray-90);
 }
 
-.water-history-legend-dot {
+.meal-history-legend-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
 }
 
-.water-history-legend-dot--good {
+.meal-history-legend-dot--good {
   background: #4cce7b;
 }
 
-.water-history-legend-dot--normal {
+.meal-history-legend-dot--normal {
   background: #ffb84c;
 }
 
-.water-history-legend-dot--bad {
+.meal-history-legend-dot--bad {
   background: var(--welli-warning);
 }
 
-.water-history-stats-card {
-  margin: 24px 32px 0;
-  padding: 16px 20px;
-  border-radius: 12px;
+.meal-history-score-card {
+  margin: 12px 32px 24px;
+  padding: 16px;
+  border-radius: 8px;
   background: var(--welli-page-bg);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   display: flex;
@@ -218,37 +229,52 @@
   justify-content: space-between;
 }
 
-.water-history-stat {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.water-history-stat-divider {
-  width: 1px;
-  height: 43px;
-  background: var(--welli-input-bg);
-}
-
-.water-history-stat-label {
+.meal-history-score-label {
   margin: 0;
   font-size: 12px;
   font-weight: 500;
   color: var(--welli-gray-90);
 }
 
-.water-history-stat-value {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
+.meal-history-score-value {
+  margin: 4px 0 0;
+  font-size: 28px;
+  font-weight: 700;
   color: #000;
 }
 
-.water-history-stat-sub {
-  margin: 0;
+.meal-history-score-max {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--welli-text-muted);
+}
+
+.meal-history-score-tier {
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #7a69fc;
+}
+
+.meal-history-score-desc {
+  margin: 4px 0 0;
   font-size: 12px;
   font-weight: 500;
   color: var(--welli-gray-90);
+}
+
+.meal-history-score-ring {
+  position: relative;
+  width: 73px;
+  height: 73px;
+  flex-shrink: 0;
+}
+
+.meal-history-score-ring-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7a69fc;
 }

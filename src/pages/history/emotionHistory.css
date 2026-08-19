@@ -1,4 +1,4 @@
-.water-history-page {
+.emotion-history-page {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -9,26 +9,26 @@
   -ms-overflow-style: none;
 }
 
-.water-history-page::-webkit-scrollbar {
+.emotion-history-page::-webkit-scrollbar {
   display: none;
 }
 
 /* 달력이 펼쳐져 내용이 길어지면 툴바가 화면 밖으로 밀려날 수 있어,
    이 화면에서는 툴바를 스크롤 컨테이너 하단에 고정한다. */
-.water-history-page .home-toolbar-wrap {
+.emotion-history-page .home-toolbar-wrap {
   position: sticky;
   bottom: 0;
   padding-bottom: 24px;
   background: var(--welli-input-bg);
 }
 
-.water-history-header {
+.emotion-history-header {
   display: flex;
   align-items: center;
   padding: 14px 32px;
 }
 
-.water-history-back {
+.emotion-history-back {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,7 +43,7 @@
   cursor: pointer;
 }
 
-.water-history-header h1 {
+.emotion-history-header h1 {
   flex: 1;
   margin: 0;
   text-align: center;
@@ -53,15 +53,15 @@
   color: var(--welli-purple-100);
 }
 
-.water-history-header-spacer {
+.emotion-history-header-spacer {
   width: 27px;
 }
 
-.water-history-date-section {
+.emotion-history-date-section {
   margin-top: 16px;
 }
 
-.water-history-lower-section {
+.emotion-history-lower-section {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -70,14 +70,14 @@
   border-radius: 16px 16px 0 0;
 }
 
-.water-history-date-nav {
+.emotion-history-date-nav {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 24px;
 }
 
-.water-history-date-nav button {
+.emotion-history-date-nav button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,7 +90,7 @@
   cursor: pointer;
 }
 
-.water-history-date-nav .water-history-date-label {
+.emotion-history-date-nav .emotion-history-date-label {
   font-size: 15px;
   font-weight: 500;
   letter-spacing: -0.15px;
@@ -98,15 +98,7 @@
   cursor: pointer;
 }
 
-.water-history-section-title {
-  margin: 24px 32px 0;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.18px;
-  color: #000;
-}
-
-.water-history-chart-card {
+.emotion-history-chart-card {
   margin: 12px 32px 0;
   padding: 16px 12px;
   border-radius: 12px;
@@ -117,12 +109,12 @@
   gap: 16px;
 }
 
-.water-history-bars {
+.emotion-history-bars {
   display: flex;
   gap: 12px;
 }
 
-.water-history-bar-col {
+.emotion-history-bar-col {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -130,48 +122,45 @@
   gap: 6px;
 }
 
-.water-history-bar-track {
+.emotion-history-bar-track {
   position: relative;
   width: 100%;
-  height: 160px;
-  border-radius: 16px;
+  height: 180px;
+  border-radius: 20px;
   overflow: hidden;
   background: var(--welli-disabled-bg);
 }
 
-.water-history-bar-fill {
+.emotion-history-bar-fill {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 16px;
+  inset: 0;
 }
 
-.water-history-bar-fill--good {
+.emotion-history-bar-fill--good {
   background: #4cce7b;
 }
 
-.water-history-bar-fill--normal {
+.emotion-history-bar-fill--normal {
   background: #ffb84c;
 }
 
-.water-history-bar-fill--bad {
+.emotion-history-bar-fill--bad {
   background: var(--welli-warning);
 }
 
-.water-history-bar-day {
+.emotion-history-bar-day {
   margin-top: 2px;
   font-size: 13px;
   font-weight: 500;
   color: #000;
 }
 
-.water-history-bar-date {
+.emotion-history-bar-date {
   font-size: 11px;
   color: var(--welli-text-muted);
 }
 
-.water-history-legend {
+.emotion-history-legend {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -180,7 +169,7 @@
   background: var(--welli-input-bg);
 }
 
-.water-history-legend-item {
+.emotion-history-legend-item {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -189,66 +178,20 @@
   color: var(--welli-gray-90);
 }
 
-.water-history-legend-dot {
+.emotion-history-legend-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
 }
 
-.water-history-legend-dot--good {
+.emotion-history-legend-dot--good {
   background: #4cce7b;
 }
 
-.water-history-legend-dot--normal {
+.emotion-history-legend-dot--normal {
   background: #ffb84c;
 }
 
-.water-history-legend-dot--bad {
+.emotion-history-legend-dot--bad {
   background: var(--welli-warning);
-}
-
-.water-history-stats-card {
-  margin: 24px 32px 0;
-  padding: 16px 20px;
-  border-radius: 12px;
-  background: var(--welli-page-bg);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.water-history-stat {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.water-history-stat-divider {
-  width: 1px;
-  height: 43px;
-  background: var(--welli-input-bg);
-}
-
-.water-history-stat-label {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--welli-gray-90);
-}
-
-.water-history-stat-value {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #000;
-}
-
-.water-history-stat-sub {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--welli-gray-90);
 }

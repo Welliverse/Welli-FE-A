@@ -8,6 +8,8 @@ import MyPage from "@/pages/mypage/MyPage";
 import WaterHistoryPage from "@/pages/history/WaterHistoryPage";
 import ExerciseHistoryPage from "@/pages/history/ExerciseHistoryPage";
 import SleepHistoryPage from "@/pages/history/SleepHistoryPage";
+import EmotionHistoryPage from "@/pages/history/EmotionHistoryPage";
+import MealHistoryPage from "@/pages/history/MealHistoryPage";
 import { useAuthStore } from "@/store/authStore";
 
 function RequireAuth() {
@@ -35,6 +37,8 @@ export const router = createBrowserRouter([
       { path: "/history/water", element: <WaterHistoryPage /> },
       { path: "/history/exercise", element: <ExerciseHistoryPage /> },
       { path: "/history/sleep", element: <SleepHistoryPage /> },
+      { path: "/history/emotion", element: <EmotionHistoryPage /> },
+      { path: "/history/meal", element: <MealHistoryPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/" replace /> },
