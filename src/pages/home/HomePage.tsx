@@ -6,7 +6,7 @@ import characterWave from "@/assets/character-wave.png";
 import homeBgDay from "@/assets/home-bg-day.png";
 import homeBgEvening from "@/assets/home-bg-evening.png";
 import homeBgNight from "@/assets/home-bg-night.png";
-import { BellIcon, MoonIcon, PlusIcon } from "@/pages/home/HomeIcons";
+import { BellIcon, MoonIcon } from "@/pages/home/HomeIcons";
 import HomeToolbar from "@/pages/home/HomeToolbar";
 import ConditionCard from "@/pages/home/ConditionCard";
 import RoutineCard from "@/pages/home/RoutineCard";
@@ -69,10 +69,6 @@ export default function HomePage() {
       </button>
 
       {notice && <p className="home-toast">{notice}</p>}
-
-      <button type="button" className="home-quick-record-btn" onClick={() => navigate("/record")}>
-        <PlusIcon /> 빠른 기록하기
-      </button>
 
       <div className="home-cards">
         <ConditionCard data={mockCondition} />

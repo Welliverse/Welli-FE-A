@@ -4,7 +4,14 @@
 
 html,
 body {
-  min-height: 100%;
+  height: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -57,25 +64,27 @@ button {
 }
 
 /*
-  화면 기본 비율 390:844 (모바일 프레임). 모든 화면은 이 안에 그려지므로
-  개별 페이지에서 별도로 신경 쓸 필요 없음. 실제 모바일(≤390px)에서는
-  화면 전체를 그대로 채움.
+  화면 기본 비율 390:844 (모바일 프레임). 높이는 844로 고정하지 않고 실제
+  뷰포트 높이에 항상 꽉 채워지도록 한다 — 고정 높이로 두면 뷰포트가 그보다
+  작을 때 화면 전환마다 아래쪽 내용이 잘려 보이는 문제가 있었다. dvh는 모바일
+  브라우저 주소창 등 UI가 접히고 펼쳐지는 것까지 반영하는 동적 뷰포트 높이.
+  개별 페이지에서 별도로 신경 쓸 필요 없음.
 */
 #root {
   width: 100%;
   max-width: 390px;
-  min-height: 100%;
+  height: 100vh;
+  height: 100dvh;
   margin: 0 auto;
   background: var(--welli-page-bg);
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 @media (min-width: 391px) {
   #root {
-    min-height: 844px;
     box-shadow: 0 0 0 1px var(--welli-border);
   }
 }

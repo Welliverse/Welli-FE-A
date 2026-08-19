@@ -4,6 +4,14 @@
   flex-direction: column;
   justify-content: center;
   padding: 32px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.auth-page::-webkit-scrollbar {
+  display: none;
 }
 
 .auth-header {

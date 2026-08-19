@@ -7,6 +7,12 @@
   padding: 28px 0 0;
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.home-page::-webkit-scrollbar {
+  display: none;
 }
 
 /* 하단 탭바가 있는 화면은 스크롤 시 카드가 탭바 밑에 가려지지 않도록 여백 확보 */
@@ -111,26 +117,6 @@
   font-size: 12px;
   font-weight: 500;
   color: var(--welli-text-muted);
-}
-
-.home-quick-record-btn {
-  margin: 15px 32px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 48px;
-  border: none;
-  border-radius: 999px;
-  background: var(--welli-primary);
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.home-quick-record-btn:hover {
-  background: var(--welli-primary-dark);
 }
 
 /* 카드 스택: 컨디션/루틴/다음 단계 카드를 세로로 쌓아서 보여준다 */
