@@ -1,5 +1,0 @@
-- generic [ref=f4e3]:
-  - heading "캐릭터가 성장했어요!" [level=1] [ref=f4e4]
-  - generic [ref=f4e5]:
-    - paragraph [ref=f4e6]: 새로운 모습으로한 단계 성장했어요!
-    - button "LEVEL UP ↑" [ref=f4e7] [cursor=pointer]

@@ -8,3 +8,4 @@ Welli_poto/
 *.tsbuildinfo
 .vite
 .claude/launch.json
+.playwright-mcp/
