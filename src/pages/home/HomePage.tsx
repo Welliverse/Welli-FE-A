@@ -1,24 +1,65 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
+import welliLogo from "@/assets/welli-logo.svg";
+import characterWave from "@/assets/character-wave.png";
+import homeBackground from "@/assets/home-background.png";
+import { BellIcon } from "@/pages/home/HomeIcons";
+import HomeCarousel from "@/pages/home/HomeCarousel";
+import HomeToolbar from "@/pages/home/HomeToolbar";
+import ConditionCard from "@/pages/home/ConditionCard";
+import RoutineCard from "@/pages/home/RoutineCard";
+import NextLevelCard from "@/pages/home/NextLevelCard";
+import { mockCondition, mockRoutines, mockLevel } from "@/pages/home/homeMockData";
+import "@/pages/home/home.css";
 
-// FE-A 담당 홈 화면 placeholder. 캐릭터 상태 시각화 + 오늘의 추천 루틴 요약은 다음 작업에서 구현.
 export default function HomePage() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  function showNotReady() {
+    setNotice("아직 준비 중인 화면이에요.");
+    window.setTimeout(() => setNotice(null), 1500);
+  }
 
   return (
-    <div style={{ padding: 32 }}>
-      <h1>홈 (placeholder)</h1>
-      <p>{user?.email}님 환영합니다.</p>
-      <button
-        onClick={() => {
-          logout();
-          navigate("/login");
-        }}
-      >
-        로그아웃
-      </button>
+    <div className="home-page">
+      <div className="home-bg" aria-hidden="true">
+        <img src={homeBackground} alt="" />
+      </div>
+      <header className="home-header">
+        <img src={welliLogo} alt="Welli" className="home-logo" />
+        <div className="home-header-actions">
+          <button type="button" className="home-icon-btn" aria-label="알림" onClick={showNotReady}>
+            <BellIcon />
+          </button>
+        </div>
+      </header>
+
+      <div className="home-character">
+        <img src={characterWave} alt={user?.nickname ?? "웰리"} />
+      </div>
+
+      {notice && <p className="home-toast">{notice}</p>}
+
+      <HomeCarousel
+        pages={[
+          <ConditionCard key="condition" data={mockCondition} />,
+          <RoutineCard key="routine" items={mockRoutines} onViewAll={showNotReady} />,
+          <NextLevelCard key="level" data={mockLevel} />,
+        ]}
+      />
+
+      <div className="home-toolbar-wrap">
+        <HomeToolbar
+          active="home"
+          onSelect={(key) => {
+            if (key === "my") navigate("/mypage");
+            else if (key !== "home") showNotReady();
+          }}
+        />
+      </div>
     </div>
   );
 }

@@ -1,0 +1,383 @@
+.home-page {
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 0 24px;
+  overflow: hidden;
+}
+
+.home-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 520px;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+}
+
+.home-bg img {
+  display: block;
+  width: 100%;
+  height: 718px;
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 40px;
+}
+
+.home-logo {
+  height: 22px;
+  width: auto;
+}
+
+.home-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.home-icon-btn {
+  display: flex;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--welli-purple-100);
+  cursor: pointer;
+}
+
+.home-character {
+  display: flex;
+  justify-content: center;
+  margin-top: 96px;
+}
+
+.home-character img {
+  width: 237px;
+  height: 271px;
+  object-fit: contain;
+}
+
+.home-toast {
+  margin: 0 32px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--welli-text-muted);
+}
+
+/* 캐러셀 */
+.home-carousel-wrap {
+  margin-top: 72px;
+}
+
+.home-carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.home-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.home-carousel-page {
+  flex: 0 0 100%;
+  box-sizing: border-box;
+  padding: 0 32px;
+  scroll-snap-align: start;
+}
+
+.home-carousel-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.home-carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  border: none;
+  padding: 0;
+  background: var(--welli-disabled-bg);
+  cursor: pointer;
+}
+
+.home-carousel-dot.active {
+  width: 16px;
+  background: var(--welli-primary);
+}
+
+/* 카드 공통 */
+.home-card {
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 컨디션 카드 */
+.condition-card {
+  padding: 20px;
+}
+
+.condition-title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.16px;
+  color: #000;
+}
+
+.condition-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.condition-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.condition-label {
+  width: 32px;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--welli-text-muted);
+}
+
+.condition-track {
+  position: relative;
+  flex: 1;
+  height: 8px;
+  border-radius: 16px;
+  background: var(--welli-disabled-bg);
+  overflow: hidden;
+}
+
+.condition-fill,
+.condition-warning {
+  position: absolute;
+  inset: 0;
+  width: 0;
+  border-radius: 16px;
+}
+
+.condition-fill {
+  background: linear-gradient(90deg, var(--welli-primary), #d6d1fe);
+}
+
+.condition-warning {
+  background: var(--welli-warning);
+}
+
+/* 루틴 카드 */
+.routine-card {
+  padding: 24px 20px;
+}
+
+.routine-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.routine-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+.routine-view-all {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--welli-primary);
+  cursor: pointer;
+}
+
+.routine-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.routine-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.routine-check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--welli-disabled-bg);
+  color: #fff;
+}
+
+.routine-check.done {
+  background: var(--welli-primary);
+  border-color: var(--welli-primary);
+}
+
+.routine-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.routine-item-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+
+.routine-item-subtitle {
+  margin: 0;
+  font-size: 12px;
+  color: var(--welli-text-muted);
+}
+
+/* 다음 단계 카드 */
+.level-card {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.level-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.level-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.level-col-right {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.level-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+
+.level-exp-text {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--welli-text-muted);
+}
+
+.level-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--welli-purple-100);
+  background: var(--welli-purple-20);
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+.level-stage {
+  margin: 0;
+  font-size: 12px;
+  color: var(--welli-text-muted);
+}
+
+.level-progress-track {
+  height: 8px;
+  border-radius: 16px;
+  background: var(--welli-disabled-bg);
+  overflow: hidden;
+}
+
+.level-progress-fill {
+  height: 100%;
+  border-radius: 16px;
+  background: linear-gradient(90deg, var(--welli-primary), #d6d1fe);
+}
+
+/* 하단 툴바 */
+.home-toolbar-wrap {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+.home-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border-radius: 30px;
+  padding: 4px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.home-toolbar-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 50px;
+  height: 50px;
+  padding: 6px 0;
+  border-radius: 41px;
+  border: none;
+  background: none;
+  color: var(--welli-text-muted);
+  cursor: pointer;
+}
+
+.home-toolbar-tab span {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.home-toolbar-tab.active {
+  background: var(--welli-primary);
+  color: #fff;
+}

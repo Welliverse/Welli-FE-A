@@ -2,7 +2,14 @@ import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import LoginPage from "@/pages/auth/LoginPage";
 import SignupPage from "@/pages/auth/SignupPage";
 import OnboardingPage from "@/pages/onboarding/OnboardingPage";
+import CharacterCreationPage from "@/pages/character/CharacterCreationPage";
 import HomePage from "@/pages/home/HomePage";
+import MyPage from "@/pages/mypage/MyPage";
+import WaterHistoryPage from "@/pages/history/WaterHistoryPage";
+import ExerciseHistoryPage from "@/pages/history/ExerciseHistoryPage";
+import SleepHistoryPage from "@/pages/history/SleepHistoryPage";
+import EmotionHistoryPage from "@/pages/history/EmotionHistoryPage";
+import MealHistoryPage from "@/pages/history/MealHistoryPage";
 import { useAuthStore } from "@/store/authStore";
 
 function RequireAuth() {
@@ -24,7 +31,14 @@ export const router = createBrowserRouter([
     element: <RequireAuth />,
     children: [
       { path: "/onboarding", element: <OnboardingPage /> },
+      { path: "/character-creation", element: <CharacterCreationPage /> },
       { path: "/home", element: <HomePage /> },
+      { path: "/mypage", element: <MyPage /> },
+      { path: "/history/water", element: <WaterHistoryPage /> },
+      { path: "/history/exercise", element: <ExerciseHistoryPage /> },
+      { path: "/history/sleep", element: <SleepHistoryPage /> },
+      { path: "/history/emotion", element: <EmotionHistoryPage /> },
+      { path: "/history/meal", element: <MealHistoryPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/" replace /> },
