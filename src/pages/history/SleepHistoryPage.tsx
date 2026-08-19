@@ -69,7 +69,7 @@ export default function SleepHistoryPage() {
           <div className="sleep-history-bars">
             {weekRecords.map((record) => (
               <div className="sleep-history-bar-col" key={record.date}>
-                <div className="sleep-history-bar-track">
+                <div className={`sleep-history-bar-track sleep-history-bar-track--${record.status}`}>
                   <div
                     className={`sleep-history-bar-fill sleep-history-bar-fill--${record.status}`}
                     style={{ height: `${Math.min(100, (record.minutes / CHART_MAX_MINUTES) * 100)}%` }}

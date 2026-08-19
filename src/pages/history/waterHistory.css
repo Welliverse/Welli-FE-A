@@ -141,7 +141,18 @@
   height: 160px;
   border-radius: 16px;
   overflow: hidden;
-  background: var(--welli-disabled-bg);
+}
+
+.water-history-bar-track--good {
+  background: #dff5e7;
+}
+
+.water-history-bar-track--normal {
+  background: #ffeac8;
+}
+
+.water-history-bar-track--bad {
+  background: #ffdee1;
 }
 
 .water-history-bar-fill {

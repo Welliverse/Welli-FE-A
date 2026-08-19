@@ -141,7 +141,18 @@
   height: 160px;
   border-radius: 16px;
   overflow: hidden;
-  background: var(--welli-disabled-bg);
+}
+
+.exercise-history-bar-track--good {
+  background: #dff5e7;
+}
+
+.exercise-history-bar-track--normal {
+  background: #ffeac8;
+}
+
+.exercise-history-bar-track--bad {
+  background: #ffdee1;
 }
 
 .exercise-history-bar-fill {

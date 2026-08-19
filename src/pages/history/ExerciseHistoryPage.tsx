@@ -68,7 +68,7 @@ export default function ExerciseHistoryPage() {
           <div className="exercise-history-bars">
             {weekRecords.map((record) => (
               <div className="exercise-history-bar-col" key={record.date}>
-                <div className="exercise-history-bar-track">
+                <div className={`exercise-history-bar-track exercise-history-bar-track--${record.status}`}>
                   <div
                     className={`exercise-history-bar-fill exercise-history-bar-fill--${record.status}`}
                     style={{ height: `${Math.min(100, (record.minutes / CHART_MAX_MINUTES) * 100)}%` }}

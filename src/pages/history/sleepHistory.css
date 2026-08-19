@@ -141,7 +141,18 @@
   height: 160px;
   border-radius: 16px;
   overflow: hidden;
-  background: var(--welli-disabled-bg);
+}
+
+.sleep-history-bar-track--good {
+  background: #dff5e7;
+}
+
+.sleep-history-bar-track--normal {
+  background: #ffeac8;
+}
+
+.sleep-history-bar-track--bad {
+  background: #ffdee1;
 }
 
 .sleep-history-bar-fill {

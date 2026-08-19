@@ -67,7 +67,7 @@ export default function WaterHistoryPage() {
           <div className="water-history-bars">
             {weekRecords.map((record) => (
               <div className="water-history-bar-col" key={record.date}>
-                <div className="water-history-bar-track">
+                <div className={`water-history-bar-track water-history-bar-track--${record.status}`}>
                   <div
                     className={`water-history-bar-fill water-history-bar-fill--${record.status}`}
                     style={{ height: `${Math.min(100, (record.valueMl / CHART_MAX_ML) * 100)}%` }}
