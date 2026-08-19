@@ -1,0 +1,43 @@
+- generic [ref=f6e3]:
+  - banner [ref=f6e4]:
+    - img "Welli" [ref=f6e5]
+    - button "알림" [ref=f6e7] [cursor=pointer]
+  - button "오늘 피부 광채가 88%예요! 꿀잠 잔 보람이 있네요✨" [ref=f6e11] [cursor=pointer]
+  - button [ref=f6e12] [cursor=pointer]:
+    - img "웰리" [ref=f6e13]
+  - button "빠른 기록하기" [ref=f6e14] [cursor=pointer]
+  - generic [ref=f6e17]:
+    - generic [ref=f6e18]:
+      - paragraph [ref=f6e19]: 현재 컨디션 좋음 😊
+      - generic [ref=f6e20]:
+        - generic [ref=f6e21]: 수분
+        - generic [ref=f6e26]: 영양
+        - generic [ref=f6e30]: 에너지
+        - generic [ref=f6e34]: 마음
+    - generic [ref=f6e38]:
+      - generic [ref=f6e39]:
+        - paragraph [ref=f6e40]: 오늘의 맞춤 루틴
+        - button "전체보기" [ref=f6e41] [cursor=pointer]
+      - list [ref=f6e44]:
+        - listitem [ref=f6e45]:
+          - button "비타민C 세럼 바르기 완료 표시" [pressed] [ref=f6e46] [cursor=pointer]
+          - generic [ref=f6e49]:
+            - paragraph [ref=f6e50]: 비타민C 세럼 바르기
+            - paragraph [ref=f6e51]: 피부 개선 루틴 · 아침
+        - listitem [ref=f6e52]:
+          - button "따뜻한 물 한 잔 마시기 완료 표시" [ref=f6e53] [cursor=pointer]
+          - generic [ref=f6e54]:
+            - paragraph [ref=f6e55]: 따뜻한 물 한 잔 마시기
+            - paragraph [ref=f6e56]: 수분 섭취 · 상시
+    - generic [ref=f6e58]:
+      - generic [ref=f6e59]:
+        - paragraph [ref=f6e60]: 다음 단계까지
+        - paragraph [ref=f6e61]: 820 / 1,200 EXP
+      - generic [ref=f6e62]:
+        - generic [ref=f6e63]: Lv.13
+        - paragraph [ref=f6e64]: 건강한 강아지
+  - navigation [ref=f6e67]:
+    - button "홈" [ref=f6e68] [cursor=pointer]
+    - button "기록" [ref=f6e72] [cursor=pointer]
+    - button "루틴" [ref=f6e76] [cursor=pointer]
+    - button "마이" [ref=f6e81] [cursor=pointer]

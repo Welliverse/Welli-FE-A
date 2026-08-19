@@ -4,6 +4,7 @@ import SignupPage from "@/pages/auth/SignupPage";
 import OnboardingPage from "@/pages/onboarding/OnboardingPage";
 import CharacterCreationPage from "@/pages/character/CharacterCreationPage";
 import HomePage from "@/pages/home/HomePage";
+import HomeReportPage from "@/pages/home/HomeReportPage";
 import MyPage from "@/pages/mypage/MyPage";
 import WaterHistoryPage from "@/pages/history/WaterHistoryPage";
 import ExerciseHistoryPage from "@/pages/history/ExerciseHistoryPage";
@@ -22,6 +23,9 @@ import SkinResultPage from "@/pages/record/skin/SkinResultPage";
 import RoutinePage from "@/pages/routine/RoutinePage";
 import RoutineCompletePage from "@/pages/routine/RoutineCompletePage";
 import RoutineIncompletePage from "@/pages/routine/RoutineIncompletePage";
+import ReportLoadingPage from "@/pages/report/ReportLoadingPage";
+import ReportResultPage from "@/pages/report/ReportResultPage";
+import ReportLevelUpPage from "@/pages/report/ReportLevelUpPage";
 import { useAuthStore } from "@/store/authStore";
 
 function RequireAuth() {
@@ -45,6 +49,7 @@ export const router = createBrowserRouter([
       { path: "/onboarding", element: <OnboardingPage /> },
       { path: "/character-creation", element: <CharacterCreationPage /> },
       { path: "/home", element: <HomePage /> },
+      { path: "/home/report", element: <HomeReportPage /> },
       { path: "/mypage", element: <MyPage /> },
       { path: "/history/water", element: <WaterHistoryPage /> },
       { path: "/history/exercise", element: <ExerciseHistoryPage /> },
@@ -63,6 +68,9 @@ export const router = createBrowserRouter([
       { path: "/routine", element: <RoutinePage /> },
       { path: "/routine/complete", element: <RoutineCompletePage /> },
       { path: "/routine/incomplete", element: <RoutineIncompletePage /> },
+      { path: "/report/loading", element: <ReportLoadingPage /> },
+      { path: "/report/result", element: <ReportResultPage /> },
+      { path: "/report/levelup", element: <ReportLevelUpPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/" replace /> },

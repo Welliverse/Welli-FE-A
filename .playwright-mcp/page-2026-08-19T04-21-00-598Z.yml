@@ -1,0 +1,16 @@
+- generic [ref=f14e20]:
+  - generic [ref=f14e21]:
+    - img "Welli" [ref=f14e22]
+    - paragraph [ref=f14e23]: 내 건강을 위한AI 맞춤 파트너
+  - generic [ref=f14e24]:
+    - paragraph [ref=f14e25]: 회원가입이 완료되었습니다. 로그인해주세요.
+    - generic [ref=f14e26]:
+      - textbox "이메일" [ref=f14e28]:
+        - /placeholder: 이메일 입력
+      - textbox "비밀번호" [ref=f14e30]:
+        - /placeholder: 비밀번호 입력
+    - button "로그인" [ref=f14e31] [cursor=pointer]
+  - generic [ref=f14e32]:
+    - button "비밀번호 찾기" [ref=f14e33] [cursor=pointer]
+    - link "회원가입" [ref=f14e34] [cursor=pointer]:
+      - /url: /signup

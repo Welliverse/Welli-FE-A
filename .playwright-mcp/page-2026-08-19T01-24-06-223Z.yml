@@ -1,0 +1,51 @@
+- generic [ref=f14e3]:
+  - banner [ref=f14e4]:
+    - img "Welli" [ref=f14e5]
+    - button "알림" [ref=f14e7] [cursor=pointer]
+  - paragraph [ref=f14e11]: 오늘 피부 광채가 88%예요! 꿀잠 잔 보람이 있네요✨
+  - img "웰리" [ref=f14e13]
+  - button "빠른 기록하기" [ref=f14e14] [cursor=pointer]
+  - generic [ref=f14e17]:
+    - generic [ref=f14e18]:
+      - generic [ref=f14e20]:
+        - paragraph [ref=f14e21]: 현재 컨디션 좋음 😊
+        - generic [ref=f14e22]:
+          - generic [ref=f14e23]: 수분
+          - generic [ref=f14e28]: 영양
+          - generic [ref=f14e32]: 에너지
+          - generic [ref=f14e36]: 마음
+      - generic [ref=f14e41]:
+        - generic [ref=f14e42]:
+          - paragraph [ref=f14e43]: 오늘의 맞춤 루틴
+          - button "전체보기" [ref=f14e44] [cursor=pointer]
+        - list [ref=f14e47]:
+          - listitem [ref=f14e48]:
+            - generic [ref=f14e52]:
+              - paragraph [ref=f14e53]: 비타민C 세럼 바르기
+              - paragraph [ref=f14e54]: 피부 개선 루틴 · 아침
+          - listitem [ref=f14e55]:
+            - generic [ref=f14e57]:
+              - paragraph [ref=f14e58]: 따뜻한 물 한 잔 마시기
+              - paragraph [ref=f14e59]: 수분 섭취 · 상시
+      - generic [ref=f14e62]:
+        - generic [ref=f14e63]:
+          - paragraph [ref=f14e64]: 다음 단계까지
+          - paragraph [ref=f14e65]: 820 / 1,200 EXP
+        - generic [ref=f14e66]:
+          - generic [ref=f14e67]: Lv.13
+          - paragraph [ref=f14e68]: 건강한 강아지
+      - generic [ref=f14e72]:
+        - paragraph [ref=f14e73]: 획득 배지
+        - generic [ref=f14e74]:
+          - generic [ref=f14e75]: 수분 마스터
+          - generic [ref=f14e77]: 루틴 챔피언
+    - generic [ref=f14e79]:
+      - button "1번째 카드로 이동" [ref=f14e80] [cursor=pointer]
+      - button "2번째 카드로 이동" [ref=f14e81] [cursor=pointer]
+      - button "3번째 카드로 이동" [ref=f14e82] [cursor=pointer]
+      - button "4번째 카드로 이동" [ref=f14e83] [cursor=pointer]
+  - navigation [ref=f14e85]:
+    - button "홈" [ref=f14e86] [cursor=pointer]
+    - button "기록" [ref=f14e90] [cursor=pointer]
+    - button "루틴" [ref=f14e94] [cursor=pointer]
+    - button "마이" [ref=f14e99] [cursor=pointer]

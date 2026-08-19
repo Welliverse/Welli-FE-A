@@ -1,4 +1,4 @@
-import { apiClient, ApiError, USE_MOCK } from "@/api/client";
+import { apiClient, ApiError, BASE_URL, USE_MOCK } from "@/api/client";
 
 export interface AuthUser {
   user_id: string;
@@ -13,9 +13,8 @@ export interface SignupRequest {
   nickname: string;
 }
 
-export interface SignupResponse {
-  message: string;
-}
+// BE는 성공 시 메시지 문자열 하나만 그대로 반환(예: "회원가입이 완료되었습니다").
+export type SignupResponse = string;
 
 export interface LoginRequest {
   email: string;
@@ -25,6 +24,52 @@ export interface LoginRequest {
 export interface LoginResponse {
   accessToken: string;
   user: AuthUser;
+}
+
+// BE /auth/login 원본 응답 — onboardingCompleted가 없고 userId가 숫자라서
+// 우리 AuthUser 형태로 바로 못 씀. /users/me로 한 번 더 조회해 보정한다.
+interface RawLoginResponse {
+  accessToken: string;
+  userId: number;
+  email: string;
+  nickname: string;
+}
+
+interface RawUserMeResponse {
+  userId: number;
+  email: string;
+  nickname: string;
+  age: number | null;
+  gender: string | null;
+  healthGoal: string | null;
+}
+
+async function fetchOnboardingCompleted(token: string): Promise<boolean> {
+  try {
+    const res = await fetch(`${BASE_URL}/users/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) return false;
+    const data: RawUserMeResponse = await res.json();
+    return Boolean(data.age && data.gender && data.healthGoal);
+  } catch {
+    // 조회 실패해도 로그인 자체는 막지 않고 온보딩부터 다시 타게 한다.
+    return false;
+  }
+}
+
+async function realLogin(credentials: LoginRequest): Promise<LoginResponse> {
+  const raw = await apiClient.post<RawLoginResponse>("/auth/login", credentials);
+  const onboardingCompleted = await fetchOnboardingCompleted(raw.accessToken);
+  return {
+    accessToken: raw.accessToken,
+    user: {
+      user_id: String(raw.userId),
+      email: raw.email,
+      nickname: raw.nickname,
+      onboardingCompleted,
+    },
+  };
 }
 
 const MOCK_DELAY_MS = 500;
@@ -60,7 +105,7 @@ async function mockSignup({ email, password, nickname }: SignupRequest): Promise
   const user_id = crypto.randomUUID();
   users[email] = { user_id, email, password, nickname, onboardingCompleted: false };
   saveMockUsers(users);
-  return { message: "회원가입이 완료되었습니다." };
+  return "회원가입이 완료되었습니다.";
 }
 
 async function mockLogin({ email, password }: LoginRequest): Promise<LoginResponse> {
@@ -97,6 +142,5 @@ export function markMockOnboardingCompleted(userId: string) {
 export const authApi = {
   signup: (credentials: SignupRequest) =>
     USE_MOCK ? mockSignup(credentials) : apiClient.post<SignupResponse>("/auth/signup", credentials),
-  login: (credentials: LoginRequest) =>
-    USE_MOCK ? mockLogin(credentials) : apiClient.post<LoginResponse>("/auth/login", credentials),
+  login: (credentials: LoginRequest) => (USE_MOCK ? mockLogin(credentials) : realLogin(credentials)),
 };

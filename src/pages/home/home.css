@@ -4,8 +4,14 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 28px 0 24px;
-  overflow: hidden;
+  padding: 28px 0 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* 하단 탭바가 있는 화면은 스크롤 시 카드가 탭바 밑에 가려지지 않도록 여백 확보 */
+.home-page:not(.home-report-page) {
+  padding-bottom: 110px;
 }
 
 .home-bg {
@@ -55,10 +61,42 @@
   cursor: pointer;
 }
 
+/* 밤 시간대에는 배경이 어두워지므로 로고/아이콘을 밝은 톤으로 뒤집는다 */
+.home-page--night .home-logo {
+  filter: brightness(0) invert(1);
+}
+
+.home-page--night .home-icon-btn {
+  color: #fff;
+}
+
+.home-message-bubble {
+  margin: 48px 32px 0;
+  padding: 12px 18px;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--welli-text-dark);
+  cursor: pointer;
+}
+
+/* character-wave.png 캔버스(237x271) 안에 실제 캐릭터는 위아래 36px씩
+   투명 여백을 두고 그려져 있어, 목업과 같은 시각적 간격을 맞추려면
+   margin이 그 여백만큼 보정돼야 한다(위: 20px 목표 - 36px 여백 = -16px). */
 .home-character {
   display: flex;
   justify-content: center;
-  margin-top: 96px;
+  width: 100%;
+  margin-top: -16px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .home-character img {
@@ -75,50 +113,33 @@
   color: var(--welli-text-muted);
 }
 
-/* 캐러셀 */
-.home-carousel-wrap {
-  margin-top: 72px;
-}
-
-.home-carousel-track {
+.home-quick-record-btn {
+  margin: 15px 32px 0;
   display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-
-.home-carousel-track::-webkit-scrollbar {
-  display: none;
-}
-
-.home-carousel-page {
-  flex: 0 0 100%;
-  box-sizing: border-box;
-  padding: 0 32px;
-  scroll-snap-align: start;
-}
-
-.home-carousel-dots {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 6px;
-  margin-top: 12px;
-}
-
-.home-carousel-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 3px;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
   border: none;
-  padding: 0;
-  background: var(--welli-disabled-bg);
+  border-radius: 999px;
+  background: var(--welli-primary);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
 }
 
-.home-carousel-dot.active {
-  width: 16px;
-  background: var(--welli-primary);
+.home-quick-record-btn:hover {
+  background: var(--welli-primary-dark);
+}
+
+/* 카드 스택: 컨디션/루틴/다음 단계 카드를 세로로 쌓아서 보여준다 */
+.home-cards {
+  margin-top: 24px;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* 카드 공통 */
@@ -138,7 +159,7 @@
 .condition-title {
   margin: 0 0 16px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: -0.16px;
   color: #000;
 }
@@ -156,11 +177,20 @@
 }
 
 .condition-label {
-  width: 32px;
+  width: 40px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: 13px;
   font-weight: 500;
   color: var(--welli-text-muted);
+}
+
+.condition-label-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 
 .condition-track {
@@ -188,8 +218,10 @@
   background: var(--welli-warning);
 }
 
-/* 루틴 카드 */
-.routine-card {
+/* 루틴 카드 (주의: /routine 페이지의 .routine-card와 이름이 겹치므로
+   home-routine-card로 구분 — 전역 클래스라 같은 이름이면 로드 순서에
+   따라 서로 덮어써서 레이아웃이 깨진다) */
+.home-routine-card {
   padding: 24px 20px;
 }
 
@@ -203,7 +235,8 @@
 .routine-title {
   margin: 0;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 700;
+  letter-spacing: -0.16px;
   color: #000;
 }
 
@@ -220,7 +253,7 @@
   cursor: pointer;
 }
 
-.routine-list {
+.home-routine-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -239,12 +272,15 @@
   flex-shrink: 0;
   width: 22px;
   height: 22px;
+  padding: 0;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1.5px solid var(--welli-disabled-bg);
+  background: none;
   color: #fff;
+  cursor: pointer;
 }
 
 .routine-check.done {
@@ -299,7 +335,8 @@
 .level-title {
   margin: 0;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 700;
+  letter-spacing: -0.16px;
   color: #000;
 }
 
@@ -338,12 +375,88 @@
   background: linear-gradient(90deg, var(--welli-primary), #d6d1fe);
 }
 
-/* 하단 툴바 */
+/* 획득 배지: 카드가 아니라 페이지 배경 위에 바로 놓이는 섹션 */
+.badge-section {
+  margin-top: 24px;
+  padding: 20px 32px 32px;
+  background: var(--welli-page-bg);
+}
+
+.badge-title {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.16px;
+  color: #000;
+}
+
+.badge-grid {
+  display: flex;
+  gap: 12px;
+}
+
+.badge-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-icon {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.badge-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--welli-text-muted);
+  text-align: center;
+}
+
+/* 하단 툴바: 카드가 많아져 페이지가 스크롤돼도 화면 하단에 항상 고정.
+   배경을 깔지 않아 알약 모양의 툴바 자체만 콘텐츠 위에 떠 있는 것처럼
+   보이게 한다(래퍼 전체에 배경을 채우면 하단이 별도 바처럼 나뉘어 보임). */
 .home-toolbar-wrap {
-  margin-top: auto;
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 390px;
   display: flex;
   justify-content: center;
-  padding-top: 16px;
+  padding: 16px 0 24px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.home-toolbar-wrap .home-toolbar {
+  pointer-events: auto;
+}
+
+/* 일일 리포트 화면(홈2/홈3): 탭하면 홈으로 돌아가는 전체화면 리포트 */
+.home-report-page {
+  cursor: pointer;
+  padding-bottom: 32px;
+}
+
+.home-report-message {
+  margin: 20px 32px 0;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--welli-text-dark);
+}
+
+.home-report-mascot {
+  margin-top: 24px;
 }
 
 .home-toolbar {

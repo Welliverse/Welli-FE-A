@@ -1,0 +1,15 @@
+- generic [ref=f7e3]:
+  - generic [ref=f7e4]:
+    - img "Welli" [ref=f7e5]
+    - paragraph [ref=f7e6]: 내 건강을 위한AI 맞춤 파트너
+  - generic [ref=f7e7]:
+    - generic [ref=f7e8]:
+      - textbox "이메일" [ref=f7e10]:
+        - /placeholder: 이메일 입력
+      - textbox "비밀번호" [ref=f7e12]:
+        - /placeholder: 비밀번호 입력
+    - button "로그인" [ref=f7e13] [cursor=pointer]
+  - generic [ref=f7e14]:
+    - button "비밀번호 찾기" [ref=f7e15] [cursor=pointer]
+    - link "회원가입" [ref=f7e16] [cursor=pointer]:
+      - /url: /signup

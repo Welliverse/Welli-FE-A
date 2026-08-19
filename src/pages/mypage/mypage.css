@@ -3,20 +3,22 @@
   display: flex;
   flex-direction: column;
   background: var(--welli-input-bg);
-  padding: 44px 0 0;
+  padding: 44px 0 110px;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-/* 기록 히스토리 아코디언이 펼쳐져 카드가 길어지면 툴바가 화면 밖으로
-   밀려날 수 있어, 이 화면에서는 툴바를 스크롤 컨테이너 하단에 고정한다.
-   하단 여백을 페이지 패딩이 아니라 이 안에 넣어야 sticky 배경이 그 틈까지
-   덮어서, 스크롤되는 내용이 여백 사이로 비쳐 보이지 않는다. */
+/* 기록 히스토리 아코디언이 펼쳐져 카드가 길어지면 페이지가 뷰포트보다
+   길어지는데, 이 페이지는 자체 스크롤 컨테이너가 아니라 문서(body)가
+   스크롤되는 구조라 sticky로는 툴바가 화면 밖으로 사라진다. 뷰포트에
+   고정되도록 fixed로 앱 프레임(390px) 중앙에 맞춰 붙인다. */
 .mypage-page .home-toolbar-wrap {
-  position: sticky;
+  position: fixed;
+  left: 50%;
   bottom: 0;
-  padding-bottom: 24px;
-  background: var(--welli-input-bg);
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 390px;
 }
 
 .mypage-header {

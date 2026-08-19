@@ -1,0 +1,15 @@
+- generic [ref=f14e142]:
+  - button "이전 단계로" [ref=f14e144] [cursor=pointer]: ‹
+  - heading "성별을 선택해주세요" [level=1] [ref=f14e149]
+  - paragraph [ref=f14e150]: 피부 타입 분석에 사용돼요
+  - generic [ref=f14e152]:
+    - button "👩 여성" [active] [ref=f14e153] [cursor=pointer]:
+      - generic [ref=f14e154]: 👩
+      - text: 여성
+    - button "👨 남성" [ref=f14e155] [cursor=pointer]:
+      - generic [ref=f14e156]: 👨
+      - text: 남성
+    - button "🙂 기타 / 선택 안함" [ref=f14e157] [cursor=pointer]:
+      - generic [ref=f14e158]: 🙂
+      - text: 기타 / 선택 안함
+  - button "다음으로" [ref=f14e160] [cursor=pointer]

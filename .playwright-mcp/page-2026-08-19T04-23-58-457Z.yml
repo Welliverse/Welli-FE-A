@@ -1,0 +1,16 @@
+- generic [ref=f14e186]:
+  - heading "짜잔! 웰리가 탄생했어요 🎉" [level=1] [ref=f14e187]
+  - img "웰리" [ref=f14e188]
+  - generic [ref=f14e189]:
+    - generic [ref=f14e190]:
+      - generic [ref=f14e191]:
+        - generic [ref=f14e192]: 웰리
+        - button "이름 수정" [ref=f14e193] [cursor=pointer]: ✏️
+      - paragraph [ref=f14e194]: 움직이는 것이 즐거운 활동형
+    - generic [ref=f14e195]:
+      - paragraph [ref=f14e196]: 특징
+      - list [ref=f14e197]:
+        - listitem [ref=f14e198]: 긍정적이고 활기찬 성격
+        - listitem [ref=f14e199]: 변화를 즐기고 기록을 좋아해요
+        - listitem [ref=f14e200]: 당신의 건강 파트너가 되어줄게요!
+  - button "웰리와 시작하기" [ref=f14e201] [cursor=pointer]

@@ -1,4 +1,4 @@
-import { useEffect, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { characterApi, type CharacterInfo } from "@/api/character";
 import characterOrb from "@/assets/character-orb.png";
@@ -12,6 +12,12 @@ export default function CharacterCreationPage() {
   const [progress, setProgress] = useState(0);
   const [isEditingName, setIsEditingName] = useState(false);
   const [nameDraft, setNameDraft] = useState("");
+  // StrictMode가 개발 모드에서 effect를 두 번 실행하는데, 캐릭터 생성은
+  // 서버에 실제로 레코드를 만드는 부수효과라 요청 자체는 한 번만 나가야
+  // 한다. 다만 요청을 한 번만 보내더라도 그 결과를 받아 상태에 반영하는
+  // 건 "살아남는"(cleanup되지 않는) effect 실행이어야 하므로, promise를
+  // ref에 저장해 두 번째 effect 실행도 같은 promise를 구독하게 한다.
+  const characterPromiseRef = useRef<Promise<CharacterInfo> | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -26,7 +32,10 @@ export default function CharacterCreationPage() {
     }
     raf = requestAnimationFrame(tick);
 
-    characterApi.create().then((data) => {
+    if (!characterPromiseRef.current) {
+      characterPromiseRef.current = characterApi.create();
+    }
+    characterPromiseRef.current.then((data) => {
       if (cancelled) return;
       setProgress(100);
       setTimeout(() => {

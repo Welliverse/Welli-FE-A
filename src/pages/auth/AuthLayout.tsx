@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+  import type { ReactNode } from "react";
 import welliLogo from "@/assets/welli-logo.svg";
 import "@/pages/auth/auth.css";
 
