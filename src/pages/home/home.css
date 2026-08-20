@@ -197,7 +197,7 @@
 }
 
 .condition-fill {
-  background: linear-gradient(90deg, var(--welli-primary), #d6d1fe);
+  background: linear-gradient(90deg, #d6d1fe, var(--welli-primary));
 }
 
 .condition-warning {
@@ -358,7 +358,7 @@
 .level-progress-fill {
   height: 100%;
   border-radius: 16px;
-  background: linear-gradient(90deg, var(--welli-primary), #d6d1fe);
+  background: linear-gradient(90deg, #d6d1fe, var(--welli-primary));
 }
 
 /* 획득 배지: 카드가 아니라 페이지 배경 위에 바로 놓이는 섹션 */
