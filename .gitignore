@@ -9,3 +9,5 @@ Welli_poto/
 .vite
 .claude/launch.json
 .playwright-mcp/
+.vercel
+.env*
