@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeToolbar from "@/pages/home/HomeToolbar";
 import HistoryCalendar from "@/pages/history/HistoryCalendar";
-import { generateWeekData, computeWeeklyMealSummary, getMealTierInfo } from "@/pages/history/mealHistoryMockData";
+import { buildWeekData, computeWeeklyMealSummary, getMealTierInfo } from "@/pages/history/mealHistoryMockData";
 import { addDays, formatWeekRange, getWeekStart } from "@/pages/history/dateUtils";
 import { SmileyGlyph } from "@/pages/history/MealScoreIcon";
+import { recordsApi, type HealthRecord } from "@/api/records";
 import "@/pages/home/home.css";
 import "@/pages/history/mealHistory.css";
 
@@ -16,8 +17,16 @@ export default function MealHistoryPage() {
   const [notice, setNotice] = useState<string | null>(null);
   const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [records, setRecords] = useState<HealthRecord[]>([]);
 
-  const weekRecords = useMemo(() => generateWeekData(weekStart), [weekStart]);
+  useEffect(() => {
+    recordsApi
+      .list()
+      .then((all) => setRecords(all.filter((r) => r.type === "MEAL")))
+      .catch(() => setRecords([]));
+  }, []);
+
+  const weekRecords = useMemo(() => buildWeekData(weekStart, records), [weekStart, records]);
   const summary = useMemo(() => computeWeeklyMealSummary(weekRecords), [weekRecords]);
   const tier = getMealTierInfo(summary.status);
   const ringOffset = RING_CIRCUMFERENCE * (1 - summary.avgScore / 100);

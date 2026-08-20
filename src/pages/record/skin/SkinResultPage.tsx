@@ -1,5 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DetailHeader } from "@/components/layout/DetailHeader";
+import { BASE_URL } from "@/api/client";
+import type { HealthRecord } from "@/api/records";
 import skinThumb1 from "@/assets/icons/skin-thumb-1.png";
 import skinMoisture from "@/assets/icons/skin-moisture.png";
 import skinOil from "@/assets/icons/skin-oil.png";
@@ -8,6 +10,9 @@ import skinSpots from "@/assets/icons/skin-spots.png";
 import skinElasticity from "@/assets/icons/skin-elasticity.png";
 import "@/pages/record/skin/skin.css";
 
+// BE에 피부 사진 AI 분석(수분/유분/잡티 등 세부 점수) 엔드포인트가 없음 — POST /records/skin-photo는
+// 사진 저장만 하고 HealthRecordResponse.value에 분석 결과를 담아 돌려주지 않는다.
+// 사진은 실제 업로드분(SkinRecordPage에서 넘어온 record.photoUrl)이고, 아래 세부 점수는 여전히 데모용 정적 값.
 const DETAILS = [
   { key: "moisture", icon: skinMoisture, label: "수분", percent: 78, status: "양호", tone: "good" as const },
   { key: "oil", icon: skinOil, label: "유분", percent: 58, status: "보통", tone: "neutral" as const },
@@ -18,18 +23,28 @@ const DETAILS = [
 
 const CARE_TAGS = ["미백 케어", "자외선 차단", "수분 보충", "피부결 케어"];
 
+function formatDateTime(iso: string) {
+  const d = new Date(iso);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}. ${pad(d.getMonth() + 1)}. ${pad(d.getDate())} · ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
 export default function SkinResultPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const record = (location.state as { record?: HealthRecord } | null)?.record;
+  const photoSrc = record?.photoUrl ? `${BASE_URL}${record.photoUrl}` : skinThumb1;
+  const dateLabel = record ? formatDateTime(record.recordedAt) : "2026. 05. 10 · 09:41";
 
   return (
     <div className="page">
       <DetailHeader title="분석 결과" />
 
       <div className="page-content">
-        <p className="skin-result-date">2026. 05. 10 · 09:41</p>
+        <p className="skin-result-date">{dateLabel}</p>
 
         <div className="card skin-result-header">
-          <img src={skinThumb1} alt="" className="skin-result-thumb" />
+          <img src={photoSrc} alt="" className="skin-result-thumb" />
           <div>
             <p className="skin-result-score-label">종합 피부 점수</p>
             <p className="skin-result-score">

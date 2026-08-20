@@ -15,6 +15,14 @@
   flex-shrink: 0;
 }
 
+.meal-result-thumb-img {
+  width: 88px;
+  height: 88px;
+  border-radius: 14px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
 .meal-result-tag {
   font-size: 12px;
   color: var(--welli-purple-dark);

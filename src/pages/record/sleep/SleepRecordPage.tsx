@@ -5,6 +5,8 @@ import { DateChip } from "@/components/layout/DateChip";
 import { ChevronRightIcon, SunIcon } from "@/components/icons";
 import { TimePickerSheet, type TimeValue } from "@/pages/record/sleep/TimePickerSheet";
 import { formatMonthDay } from "@/pages/history/dateUtils";
+import { recordsApi } from "@/api/records";
+import { ApiError } from "@/api/client";
 import sleepMoonIcon from "@/assets/icons/sleep.png";
 import moodTired from "@/assets/icons/mood-tired.png";
 import moodOkay from "@/assets/icons/mood-okay.png";
@@ -19,9 +21,12 @@ const QUALITY_OPTIONS = [
   { key: "perfect", label: "완벽해요", icon: moodPerfect },
 ];
 
-function toMinutes({ period, hour, minute }: TimeValue) {
-  const hour24 = period === "오전" ? (hour === 12 ? 0 : hour) : hour === 12 ? 12 : hour + 12;
-  return hour24 * 60 + minute;
+function toHour24({ period, hour }: TimeValue) {
+  return period === "오전" ? (hour === 12 ? 0 : hour) : hour === 12 ? 12 : hour + 12;
+}
+
+function toMinutes(value: TimeValue) {
+  return toHour24(value) * 60 + value.minute;
 }
 
 function formatTime({ period, hour, minute }: TimeValue) {
@@ -34,6 +39,8 @@ export default function SleepRecordPage() {
   const [wakeTime, setWakeTime] = useState<TimeValue>({ period: "오전", hour: 7, minute: 30 });
   const [openSheet, setOpenSheet] = useState<"sleep" | "wake" | null>(null);
   const [quality, setQuality] = useState("okay");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const totalMinutes = useMemo(() => {
     const diff = toMinutes(wakeTime) - toMinutes(sleepTime);
@@ -43,6 +50,29 @@ export default function SleepRecordPage() {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
   const todayLabel = useMemo(() => `${formatMonthDay(new Date())} · 오늘`, []);
+
+  async function handleSave() {
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      // 일어난 시간을 오늘로 고정하고, 거기서 총 수면 시간만큼 거슬러 올라가 잠든 시각을 계산
+      // (자정을 넘겨도 날짜 경계가 자동으로 맞춰짐).
+      const wakeAt = new Date();
+      wakeAt.setHours(toHour24(wakeTime), wakeTime.minute, 0, 0);
+      const sleepAt = new Date(wakeAt.getTime() - totalMinutes * 60000);
+      await recordsApi.create("SLEEP", {
+        sleepAt: sleepAt.toISOString(),
+        wakeAt: wakeAt.toISOString(),
+        durationMinutes: totalMinutes,
+        quality,
+      });
+      navigate("/record");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "저장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <div className="page">
@@ -96,8 +126,9 @@ export default function SleepRecordPage() {
           </div>
         </section>
 
-        <button type="button" className="primary-button" onClick={() => navigate("/record")}>
-          수면 기록 저장
+        {error && <p className="record-error">{error}</p>}
+        <button type="button" className="primary-button" disabled={isSubmitting} onClick={handleSave}>
+          {isSubmitting ? "저장하는 중..." : "수면 기록 저장"}
         </button>
       </div>
 

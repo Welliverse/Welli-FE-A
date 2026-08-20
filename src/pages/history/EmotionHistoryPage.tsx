@@ -1,14 +1,15 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeToolbar from "@/pages/home/HomeToolbar";
 import HistoryCalendar from "@/pages/history/HistoryCalendar";
 import {
-  generateWeekData,
+  buildWeekData,
   computeWeeklyEmotionSummary,
   getEmotionOverallMessage,
   type DayStatus,
 } from "@/pages/history/emotionHistoryMockData";
 import { addDays, formatWeekRange, getWeekStart } from "@/pages/history/dateUtils";
+import { recordsApi, type HealthRecord } from "@/api/records";
 import dogFaceGood from "@/assets/icons/dog-face-good.png";
 import dogFaceNeutral from "@/assets/icons/dog-face-neutral.png";
 import dogFaceBad from "@/assets/icons/dog-face-bad.png";
@@ -26,8 +27,16 @@ export default function EmotionHistoryPage() {
   const [notice, setNotice] = useState<string | null>(null);
   const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [records, setRecords] = useState<HealthRecord[]>([]);
 
-  const weekRecords = useMemo(() => generateWeekData(weekStart), [weekStart]);
+  useEffect(() => {
+    recordsApi
+      .list()
+      .then((all) => setRecords(all.filter((r) => r.type === "STRESS_EMOTION")))
+      .catch(() => setRecords([]));
+  }, []);
+
+  const weekRecords = useMemo(() => buildWeekData(weekStart, records), [weekStart, records]);
   const summary = useMemo(() => computeWeeklyEmotionSummary(weekRecords), [weekRecords]);
 
   function showNotReady() {
@@ -83,8 +92,11 @@ export default function EmotionHistoryPage() {
           <div className="emotion-history-bars">
             {weekRecords.map((record) => (
               <div className="emotion-history-bar-col" key={record.date}>
-                <div className="emotion-history-bar-track">
-                  <div className={`emotion-history-bar-fill emotion-history-bar-fill--${record.status}`} />
+                <div className={`emotion-history-bar-track emotion-history-bar-track--${record.status}`}>
+                  <div
+                    className={`emotion-history-bar-fill emotion-history-bar-fill--${record.status}`}
+                    style={{ height: `${Math.min(100, record.moodScore)}%` }}
+                  />
                 </div>
                 <span className="emotion-history-bar-day">{record.day}</span>
                 <span className="emotion-history-bar-date">{record.date}</span>

@@ -4,6 +4,8 @@ import { DetailHeader } from "@/components/layout/DetailHeader";
 import { DateChip } from "@/components/layout/DateChip";
 import { MinusIcon, PlusIcon } from "@/components/icons";
 import { formatMonthDay } from "@/pages/history/dateUtils";
+import { recordsApi } from "@/api/records";
+import { ApiError } from "@/api/client";
 import waterGlassLarge from "@/assets/icons/water-glass-large.png";
 import waterCupHalf from "@/assets/icons/water-cup-half.png";
 import waterCupFull from "@/assets/icons/water-cup-full.png";
@@ -21,12 +23,27 @@ const QUICK_ADD = [
 export default function WaterRecordPage() {
   const navigate = useNavigate();
   const [amount, setAmount] = useState(1500);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const todayLabel = useMemo(() => `${formatMonthDay(new Date())} · 오늘`, []);
 
   const nearestMark = useMemo(() => {
     const rounded = Math.round(amount / 500) * 500;
     return Math.min(GOAL_ML, Math.max(0, rounded));
   }, [amount]);
+
+  async function handleSave() {
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await recordsApi.create("WATER", { amountMl: amount });
+      navigate("/record");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "저장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <div className="page">
@@ -83,6 +100,11 @@ export default function WaterRecordPage() {
             ))}
           </div>
         </section>
+
+        {error && <p className="record-error">{error}</p>}
+        <button type="button" className="primary-button" disabled={isSubmitting} onClick={handleSave}>
+          {isSubmitting ? "저장하는 중..." : "물 섭취 기록 저장"}
+        </button>
       </div>
     </div>
   );

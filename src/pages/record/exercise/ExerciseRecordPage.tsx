@@ -4,6 +4,8 @@ import { DetailHeader } from "@/components/layout/DetailHeader";
 import { DateChip } from "@/components/layout/DateChip";
 import { MinusIcon, PlusIcon } from "@/components/icons";
 import { formatMonthDay } from "@/pages/history/dateUtils";
+import { recordsApi } from "@/api/records";
+import { ApiError } from "@/api/client";
 import iconWalk from "@/assets/icons/exercise-walk.png";
 import iconRun from "@/assets/icons/exercise-run.png";
 import iconBike from "@/assets/icons/exercise-bike.png";
@@ -34,6 +36,8 @@ export default function ExerciseRecordPage() {
   const [type, setType] = useState<(typeof EXERCISE_TYPES)[number]["key"]>("run");
   const [duration, setDuration] = useState(45);
   const [intensity, setIntensity] = useState<(typeof INTENSITY_OPTIONS)[number]["key"]>("mid");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const calories = useMemo(() => {
     const rate = EXERCISE_TYPES.find((t) => t.key === type)?.rate ?? 4;
@@ -41,6 +45,24 @@ export default function ExerciseRecordPage() {
     return Math.round(rate * duration * mult);
   }, [type, duration, intensity]);
   const todayLabel = useMemo(() => `${formatMonthDay(new Date())} · 오늘`, []);
+
+  async function handleSave() {
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await recordsApi.create("EXERCISE", {
+        exerciseType: type,
+        durationMinutes: duration,
+        intensity,
+        estimatedCalories: calories,
+      });
+      navigate("/record");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "저장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <div className="page">
@@ -134,8 +156,9 @@ export default function ExerciseRecordPage() {
           </div>
         </div>
 
-        <button type="button" className="primary-button" onClick={() => navigate("/record")}>
-          운동 기록 저장
+        {error && <p className="record-error">{error}</p>}
+        <button type="button" className="primary-button" disabled={isSubmitting} onClick={handleSave}>
+          {isSubmitting ? "저장하는 중..." : "운동 기록 저장"}
         </button>
       </div>
     </div>

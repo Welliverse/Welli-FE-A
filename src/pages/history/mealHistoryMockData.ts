@@ -1,4 +1,5 @@
-import { addDays } from "@/pages/history/dateUtils";
+import { addDays, isSameDay } from "@/pages/history/dateUtils";
+import type { HealthRecord } from "@/api/records";
 
 export type DayStatus = "good" | "normal" | "bad";
 
@@ -7,17 +8,10 @@ export interface DailyMealRecord {
   date: string;
   score: number;
   status: DayStatus;
+  logged: boolean;
 }
 
 const WEEKDAY_LABELS = ["일", "월", "화", "수", "목", "금", "토"];
-
-function hashString(value: string): number {
-  let hash = 0;
-  for (let i = 0; i < value.length; i++) {
-    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
-  }
-  return hash;
-}
 
 function scoreToStatus(score: number): DayStatus {
   if (score >= 80) return "good";
@@ -25,20 +19,23 @@ function scoreToStatus(score: number): DayStatus {
   return "bad";
 }
 
-// weekStart(그 주의 일요일) 기준으로 날짜별 AI 식단 점수를 결정적으로 생성 — 같은 주는
-// 항상 같은 그래프가 보이고, 주가 바뀌면 다른 값이 보이도록 날짜 문자열을 해시해서 사용.
-// TODO(BE): 실제로는 /records에 저장된 MEAL 기록의 AI 채점 결과(0~100점)를 받아와야 함.
-export function generateWeekData(weekStart: Date): DailyMealRecord[] {
+// BE에 식사 사진 AI 채점 기능이 없어 기록의 실제 영양 점수를 받아올 수 없음 — 대신 그날
+// MEAL 기록을 실제로 저장했는지 여부만 확인 가능(기록함 100점 / 안 함 0점)으로 근사한다.
+// AI 채점 엔드포인트가 생기면 이 근사치를 실제 점수로 교체하면 됨.
+export function buildWeekData(weekStart: Date, records: HealthRecord[]): DailyMealRecord[] {
   return WEEKDAY_LABELS.map((day, i) => {
     const date = addDays(weekStart, i);
-    const key = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    const score = 40 + (hashString(key) % 61);
-    return { day, date: `${date.getMonth() + 1}/${date.getDate()}`, score, status: scoreToStatus(score) };
+    const logged = records.some((r) => isSameDay(new Date(r.recordedAt), date));
+    const score = logged ? 100 : 0;
+    return { day, date: `${date.getMonth() + 1}/${date.getDate()}`, score, status: scoreToStatus(score), logged };
   });
 }
 
+// 기록이 없는 날은 평균 계산에서 제외(기록 안 한 날을 0점으로 넣으면 평균이 비정상적으로 낮아짐).
 export function computeWeeklyMealSummary(records: DailyMealRecord[]) {
-  const avgScore = Math.round(records.reduce((sum, r) => sum + r.score, 0) / records.length);
+  const logged = records.filter((r) => r.logged);
+  if (logged.length === 0) return { avgScore: 0, status: scoreToStatus(0) };
+  const avgScore = Math.round(logged.reduce((sum, r) => sum + r.score, 0) / logged.length);
   return { avgScore, status: scoreToStatus(avgScore) };
 }
 

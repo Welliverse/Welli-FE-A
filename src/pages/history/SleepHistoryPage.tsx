@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeToolbar from "@/pages/home/HomeToolbar";
 import HistoryCalendar from "@/pages/history/HistoryCalendar";
-import { generateWeekData, computeWeeklySleepSummary, formatDuration } from "@/pages/history/sleepHistoryMockData";
+import { buildWeekData, computeWeeklySleepSummary, formatDuration } from "@/pages/history/sleepHistoryMockData";
 import { addDays, formatWeekRange, getWeekStart } from "@/pages/history/dateUtils";
+import { recordsApi, type HealthRecord } from "@/api/records";
 import "@/pages/home/home.css";
 import "@/pages/history/sleepHistory.css";
 
@@ -13,9 +14,21 @@ export default function SleepHistoryPage() {
   const navigate = useNavigate();
   const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [records, setRecords] = useState<HealthRecord[]>([]);
 
-  const weekRecords = useMemo(() => generateWeekData(weekStart), [weekStart]);
-  const summary = useMemo(() => computeWeeklySleepSummary(weekStart, weekRecords), [weekStart, weekRecords]);
+  useEffect(() => {
+    recordsApi
+      .list()
+      .then((all) => setRecords(all.filter((r) => r.type === "SLEEP")))
+      .catch(() => setRecords([]));
+  }, []);
+
+  const weekRecords = useMemo(() => buildWeekData(weekStart, records), [weekStart, records]);
+  const prevWeekRecords = useMemo(() => buildWeekData(addDays(weekStart, -7), records), [weekStart, records]);
+  const summary = useMemo(
+    () => computeWeeklySleepSummary(weekRecords, prevWeekRecords),
+    [weekRecords, prevWeekRecords],
+  );
 
   function goToPrevWeek() {
     setWeekStart((prev) => addDays(prev, -7));

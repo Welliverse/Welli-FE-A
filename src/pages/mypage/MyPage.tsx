@@ -21,7 +21,7 @@ const HISTORY_ROUTES: Partial<Record<RecordType, string>> = {
   WATER: "/history/water",
   EXERCISE: "/history/exercise",
   SLEEP: "/history/sleep",
-  EMOTION: "/history/emotion",
+  STRESS_EMOTION: "/history/emotion",
   MEAL: "/history/meal",
 };
 

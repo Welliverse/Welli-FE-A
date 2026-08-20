@@ -1,8 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DetailHeader } from "@/components/layout/DetailHeader";
+import { analysisApi, type AnalysisResult } from "@/api/analysis";
 import dogFaceWink from "@/assets/icons/dog-face-wink.png";
 import "@/pages/report/report.css";
 
+// BE 분석 응답(AnalysisResponse)은 conditionScore/conditionDelta/feedbackText 등 종합 값만 주고
+// 피부/운동/스트레스/영양/수면처럼 항목별 세부 점수는 내려주지 않는다 — 레이더 차트는 그래서
+// 여전히 데모용 정적 값. 종합 점수/증감/코멘트만 실제 응답으로 교체.
 const RADAR_AXES = [
   { key: "skin", label: "피부", value: 88 },
   { key: "exercise", label: "운동", value: 78 },
@@ -36,6 +41,25 @@ function dataPoints() {
 
 export default function ReportResultPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [result, setResult] = useState<AnalysisResult | null>(
+    (location.state as { result?: AnalysisResult } | null)?.result ?? null,
+  );
+
+  useEffect(() => {
+    if (result) return;
+    // 로딩 화면을 거치지 않고 이 페이지로 바로 들어온 경우(예: 새로고침) 최신 분석 결과를 조회.
+    analysisApi
+      .getLatest()
+      .then(setResult)
+      .catch(() => {
+        // 조회 실패 시 아래 정적 기본값(82/+8/코멘트)이 그대로 보임.
+      });
+  }, [result]);
+
+  const score = result?.conditionScore ?? 82;
+  const delta = result?.conditionDelta ?? 8;
+  const comment = result?.feedbackText ?? "수면 점수가 개선되고 있어요!\n꾸준히 유지하면 더 좋아질 거예요 😌";
 
   return (
     <div className="page">
@@ -45,10 +69,11 @@ export default function ReportResultPage() {
         <div className="card report-score-card">
           <p className="report-score-label">종합 점수</p>
           <p className="report-score-value">
-            82<small> / 100</small>
+            {score}
+            <small> / 100</small>
           </p>
           <p className="report-score-delta">
-            지난주 대비 <strong>+8</strong>
+            지난주 대비 <strong>{delta >= 0 ? `+${delta}` : delta}</strong>
           </p>
         </div>
 
@@ -86,9 +111,12 @@ export default function ReportResultPage() {
         <div className="report-comment-card">
           <img src={dogFaceWink} alt="" className="report-comment-avatar" />
           <p className="report-comment-text">
-            수면 점수가 개선되고 있어요!
-            <br />
-            꾸준히 유지하면 더 좋아질 거예요 😌
+            {comment.split("\n").map((line, i) => (
+              <span key={i}>
+                {i > 0 && <br />}
+                {line}
+              </span>
+            ))}
           </p>
         </div>
 

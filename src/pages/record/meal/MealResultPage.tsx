@@ -1,7 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DetailHeader } from "@/components/layout/DetailHeader";
+import { recordsApi } from "@/api/records";
+import { ApiError } from "@/api/client";
 import "@/pages/record/meal/meal.css";
 
+// BE에 식사 사진 AI 분석 엔드포인트가 없음(생성/영양분 인식 불가, 업로드 API도 skin-photo 전용) —
+// 아래 메뉴명/칼로리/영양성분은 여전히 데모용 정적 값. 사진은 캡처한 실제 파일을 미리보기로만 보여주고,
+// 서버에는 POST /records(type: MEAL)로 이 값들을 그대로 기록한다.
 const NUTRIENTS = [
   { label: "탄수화물", value: "18g", percent: "6%" },
   { label: "단백질", value: "22g", percent: "40%" },
@@ -11,6 +17,35 @@ const NUTRIENTS = [
 
 export default function MealResultPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const file = (location.state as { file?: File } | null)?.file;
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setPreviewUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [file]);
+
+  async function handleSave() {
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await recordsApi.create("MEAL", {
+        foodName: "소고기 샐러드",
+        calories: 320,
+        nutrients: NUTRIENTS,
+      });
+      navigate("/record");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "저장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <div className="page">
@@ -18,7 +53,11 @@ export default function MealResultPage() {
 
       <div className="page-content">
         <div className="card meal-result-header">
-          <span className="meal-result-thumb">🥗</span>
+          {previewUrl ? (
+            <img src={previewUrl} alt="" className="meal-result-thumb-img" />
+          ) : (
+            <span className="meal-result-thumb">🥗</span>
+          )}
           <div>
             <p className="meal-result-tag">AI 분석 결과</p>
             <h2 className="meal-result-title">소고기 샐러드</h2>
@@ -79,8 +118,9 @@ export default function MealResultPage() {
           </ul>
         </div>
 
-        <button type="button" className="primary-button" onClick={() => navigate("/record")}>
-          점심 기록 저장
+        {error && <p className="record-error">{error}</p>}
+        <button type="button" className="primary-button" disabled={isSubmitting} onClick={handleSave}>
+          {isSubmitting ? "저장하는 중..." : "점심 기록 저장"}
         </button>
       </div>
     </div>

@@ -136,9 +136,24 @@
   background: var(--welli-disabled-bg);
 }
 
+.emotion-history-bar-track--good {
+  background: #dff5e7;
+}
+
+.emotion-history-bar-track--normal {
+  background: #ffeac8;
+}
+
+.emotion-history-bar-track--bad {
+  background: #ffdee1;
+}
+
 .emotion-history-bar-fill {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
 }
 
 .emotion-history-bar-fill--good {

@@ -188,20 +188,12 @@
   overflow: hidden;
 }
 
-.condition-fill,
-.condition-warning {
+.condition-fill {
   position: absolute;
   inset: 0;
   width: 0;
   border-radius: 16px;
-}
-
-.condition-fill {
   background: linear-gradient(90deg, #d6d1fe, var(--welli-primary));
-}
-
-.condition-warning {
-  background: var(--welli-warning);
 }
 
 /* 루틴 카드 (주의: /routine 페이지의 .routine-card와 이름이 겹치므로

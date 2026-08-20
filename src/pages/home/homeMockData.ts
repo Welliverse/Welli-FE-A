@@ -2,12 +2,16 @@ import badgeStreak from "@/assets/icons/badge-streak.png";
 import badgeWater from "@/assets/icons/badge-water.png";
 import badgeRoutine from "@/assets/icons/badge-routine.png";
 
-// TODO(BE): 홈 화면 데이터 연동 전 mock. 실제 API 나오면 이 파일만 교체.
+// TODO(BE): mockRoutines는 실제 GET /routines/recommendations로 대체됨(HomePage.tsx 참고).
+// mockCondition의 "수분"/"마음"도 오늘 저장된 실제 WATER/STRESS_EMOTION 기록으로 대체됨
+// (HomePage.tsx 참고) — /records에서 직접 집계 가능해서 가능했음. "영양"/"에너지"는 여전히 mock —
+// 식사(MEAL)는 있지만 AI 채점이 없어 점수화가 안 되고, "에너지"에 명확히 대응하는 기록 타입이 없음.
+// mockLevel도 GET /characters/me의 growthStage(Lv.)/growthScore(EXP)/appearanceState(단계명)로
+// 대체됨(HomePage.tsx 참고) — API 실패 시 폴백으로만 쓰임. mockDailyMessage는 여전히 mock.
 
 export interface ConditionStat {
   label: string;
   value: number; // 0~100
-  warningValue?: number; // 0~100, value를 넘어서는 초과분을 경고색으로 표시
 }
 
 export interface ConditionData {
@@ -20,7 +24,7 @@ export const mockCondition: ConditionData = {
   status: "좋음",
   emoji: "😊",
   stats: [
-    { label: "수분", value: 66, warningValue: 88 },
+    { label: "수분", value: 66 },
     { label: "영양", value: 72 },
     { label: "에너지", value: 55 },
     { label: "마음", value: 80 },
@@ -35,11 +39,6 @@ export interface RoutineItem {
   subtitle: string;
   done: boolean;
 }
-
-export const mockRoutines: RoutineItem[] = [
-  { id: "1", title: "비타민C 세럼 바르기", subtitle: "피부 개선 루틴 · 아침", done: true },
-  { id: "2", title: "따뜻한 물 한 잔 마시기", subtitle: "수분 섭취 · 상시", done: false },
-];
 
 export interface LevelData {
   level: number;

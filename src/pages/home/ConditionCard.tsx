@@ -5,9 +5,6 @@ function StatBar({ stat }: { stat: ConditionStat }) {
     <div className="condition-row">
       <span className="condition-label">{stat.label}</span>
       <div className="condition-track">
-        {stat.warningValue !== undefined && (
-          <div className="condition-warning" style={{ width: `${stat.warningValue}%` }} />
-        )}
         <div className="condition-fill" style={{ width: `${stat.value}%` }} />
       </div>
     </div>

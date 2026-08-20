@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { analysisApi, type AnalysisResult } from "@/api/analysis";
 import mascotScan from "@/assets/mascots/mascot-report-scan.png";
 import "@/pages/report/report.css";
 
 // AI 분석 로딩중.png: 기록을 모아 AI가 분석하는 동안 보여주는 진행률 화면.
+// 진행률 바는 여전히 타이머 연출이지만, 그 동안 실제로 POST /analysis/run을 호출해 분석을 실행하고
+// 결과를 결과 화면으로 함께 넘긴다(진행률 100%와 실제 응답 도착을 둘 다 기다린 뒤 이동).
 export default function ReportLoadingPage() {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
+  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const tick = setInterval(() => {
@@ -16,11 +21,19 @@ export default function ReportLoadingPage() {
   }, []);
 
   useEffect(() => {
+    analysisApi
+      .run()
+      .then(setResult)
+      .catch(() => setFailed(true));
+  }, []);
+
+  useEffect(() => {
     if (progress < 100) return;
+    if (!result && !failed) return;
     // 이 화면을 히스토리에 남기면 뒤로가기 시 다시 진행률이 돌며 결과로 튕겨나가므로 replace로 넘어간다.
-    const timeout = setTimeout(() => navigate("/report/result", { replace: true }), 400);
+    const timeout = setTimeout(() => navigate("/report/result", { replace: true, state: { result } }), 400);
     return () => clearTimeout(timeout);
-  }, [progress, navigate]);
+  }, [progress, result, failed, navigate]);
 
   return (
     <div className="page report-loading-page">

@@ -31,18 +31,7 @@ type RequestOptions = {
   body?: unknown;
 };
 
-async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const token = useAuthStore.getState().token;
-
-  const res = await fetch(`${BASE_URL}${path}`, {
-    method: options.method ?? "GET",
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
-  });
-
+async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
     let body: ApiErrorBody = {};
     try {
@@ -65,8 +54,40 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   return JSON.parse(text) as T;
 }
 
+async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  const token = useAuthStore.getState().token;
+
+  const res = await fetch(`${BASE_URL}${path}`, {
+    method: options.method ?? "GET",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+  });
+
+  return handleResponse<T>(res);
+}
+
+// 피부 사진 업로드(POST /records/skin-photo)처럼 multipart/form-data가 필요한 요청 전용.
+// Content-Type은 브라우저가 boundary를 채워 자동 설정하므로 직접 지정하지 않는다.
+async function requestForm<T>(path: string, formData: FormData): Promise<T> {
+  const token = useAuthStore.getState().token;
+
+  const res = await fetch(`${BASE_URL}${path}`, {
+    method: "POST",
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: formData,
+  });
+
+  return handleResponse<T>(res);
+}
+
 export const apiClient = {
   get: <T>(path: string) => request<T>(path),
   post: <T>(path: string, body?: unknown) => request<T>(path, { method: "POST", body }),
   patch: <T>(path: string, body?: unknown) => request<T>(path, { method: "PATCH", body }),
+  postForm: <T>(path: string, formData: FormData) => requestForm<T>(path, formData),
 };

@@ -1,4 +1,5 @@
-import { addDays } from "@/pages/history/dateUtils";
+import { addDays, isSameDay } from "@/pages/history/dateUtils";
+import { latestOf, type HealthRecord } from "@/api/records";
 
 export type DayStatus = "good" | "normal" | "bad";
 
@@ -8,33 +9,35 @@ export interface DailyExerciseRecord {
   minutes: number;
   calories: number;
   status: DayStatus;
+  logged: boolean;
 }
 
-// 나중에 운동 기록 화면에서 저장한 실제 값(운동 시간, 소모 칼로리)으로 대체될 mock 데이터.
 export const MOCK_GOAL_MINUTES = 30;
 
 const WEEKDAY_LABELS = ["일", "월", "화", "수", "목", "금", "토"];
 
-function hashString(value: string): number {
-  let hash = 0;
-  for (let i = 0; i < value.length; i++) {
-    hash = (hash * 31 + value.charCodeAt(i)) >>> 0;
-  }
-  return hash;
+function statusFor(minutes: number): DayStatus {
+  if (minutes <= 0) return "bad";
+  return minutes >= 30 ? "good" : minutes >= 15 ? "normal" : "bad";
 }
 
-// weekStart(그 주의 일요일) 기준으로 날짜별 값을 결정적으로 생성 — 같은 주는 항상
-// 같은 그래프가 보이고, 주가 바뀌면 다른 값이 보이도록 날짜 문자열을 해시해서 사용.
-// 운동 시간(minutes)이 막대 높이를 결정하고, 소모 칼로리는 시간에 대략 비례하도록 계산.
-export function generateWeekData(weekStart: Date): DailyExerciseRecord[] {
+// weekStart(그 주의 일요일) 기준 7일 각각에, 그날 저장된 EXERCISE 기록 중 가장 최근 것의
+// 운동 시간/칼로리를 매핑(같은 날 다시 저장해도 합산하지 않고 최신 값으로 대체).
+export function buildWeekData(weekStart: Date, records: HealthRecord[]): DailyExerciseRecord[] {
   return WEEKDAY_LABELS.map((day, i) => {
     const date = addDays(weekStart, i);
-    const key = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-    const hash = hashString(key);
-    const minutes = hash % 61; // 0~60분
-    const calories = Math.round(minutes * 7 + (hash % 40));
-    const status: DayStatus = minutes >= 30 ? "good" : minutes >= 15 ? "normal" : "bad";
-    return { day, date: `${date.getMonth() + 1}/${date.getDate()}`, minutes, calories, status };
+    const dayRecords = records.filter((r) => isSameDay(new Date(r.recordedAt), date));
+    const latest = latestOf(dayRecords);
+    const minutes = Number(latest?.value.durationMinutes) || 0;
+    const calories = Number(latest?.value.estimatedCalories) || 0;
+    return {
+      day,
+      date: `${date.getMonth() + 1}/${date.getDate()}`,
+      minutes,
+      calories,
+      status: statusFor(minutes),
+      logged: dayRecords.length > 0,
+    };
   });
 }
 

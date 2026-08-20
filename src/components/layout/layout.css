@@ -60,6 +60,13 @@
   cursor: not-allowed;
 }
 
+.record-error {
+  margin: 0;
+  font-size: 13px;
+  color: var(--welli-warning);
+  text-align: center;
+}
+
 /* ---------- DetailHeader ---------- */
 .detail-header {
   display: flex;
@@ -90,6 +97,13 @@
 
 .detail-header-icon-btn:hover {
   background: rgba(0, 0, 0, 0.04);
+}
+
+/* 오른쪽 버튼이 없는 화면(예: 피부 기록)에서 레이아웃 균형만 맞추는 빈 자리 —
+   버튼처럼 hover 음영이나 커서가 나오면 안 되므로 크기만 가져오고 인터랙션 스타일은 뺀다. */
+.detail-header-icon-spacer {
+  width: 40px;
+  height: 40px;
 }
 
 /* ---------- DateChip ---------- */

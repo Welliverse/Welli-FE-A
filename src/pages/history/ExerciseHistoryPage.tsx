@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeToolbar from "@/pages/home/HomeToolbar";
 import HistoryCalendar from "@/pages/history/HistoryCalendar";
-import { generateWeekData, computeExerciseHighlights } from "@/pages/history/exerciseHistoryMockData";
+import { buildWeekData, computeExerciseHighlights } from "@/pages/history/exerciseHistoryMockData";
 import { addDays, formatWeekRange, getWeekStart } from "@/pages/history/dateUtils";
-import { CheckGlyph, FlameGlyph } from "@/pages/history/ExerciseHighlightIcons";
+import { CheckGlyph, FlameGlyph, ShoeGlyph } from "@/pages/history/ExerciseHighlightIcons";
+import { recordsApi, type HealthRecord } from "@/api/records";
 import "@/pages/home/home.css";
 import "@/pages/history/exerciseHistory.css";
 
@@ -14,8 +15,16 @@ export default function ExerciseHistoryPage() {
   const navigate = useNavigate();
   const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [records, setRecords] = useState<HealthRecord[]>([]);
 
-  const weekRecords = useMemo(() => generateWeekData(weekStart), [weekStart]);
+  useEffect(() => {
+    recordsApi
+      .list()
+      .then((all) => setRecords(all.filter((r) => r.type === "EXERCISE")))
+      .catch(() => setRecords([]));
+  }, []);
+
+  const weekRecords = useMemo(() => buildWeekData(weekStart, records), [weekStart, records]);
   const highlights = useMemo(() => computeExerciseHighlights(weekRecords), [weekRecords]);
 
   function goToPrevWeek() {
@@ -124,10 +133,10 @@ export default function ExerciseHistoryPage() {
           <div className="exercise-history-highlight-row">
             <span className="exercise-history-highlight-left">
               <span className="exercise-history-highlight-icon exercise-history-highlight-icon--streak">
-                <CheckGlyph />
+                <ShoeGlyph />
               </span>
               <span className="exercise-history-highlight-label">
-                {highlights.streakDays}일 연속 운동을 달성했어요
+                {highlights.streakDays}일 연속 운동을 달성했어요 🎉
               </span>
             </span>
             <span className="exercise-history-highlight-value">최고예요!</span>

@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { CameraIcon } from "@/components/icons";
 import "@/components/layout/layout.css";
 
@@ -12,12 +13,22 @@ interface PhotoCaptureAreaProps {
   previewSrc?: string;
   /** 실사 배경 대신 쓸 이모지 + CSS 가이드 오버레이(식사 촬영 화면 등) */
   previewEmoji?: string;
-  onCapture: () => void;
+  onCapture: (file: File) => void;
   recentPhotos: RecentPhoto[];
+  disabled?: boolean;
 }
 
-// 식사/피부 기록 화면 공통 카메라 캡처 UI. 실제 카메라 연동 전이라 정적 이미지/이모지로 미리보기를 대신함.
-export function PhotoCaptureArea({ previewSrc, previewEmoji, onCapture, recentPhotos }: PhotoCaptureAreaProps) {
+// 식사/피부 기록 화면 공통 카메라 캡처 UI. 버튼을 누르면 숨겨진 파일 입력을 열어
+// 실제 카메라 촬영/갤러리 선택 파일을 받아온다(모바일 브라우저에서 capture 속성이 카메라를 바로 연다).
+export function PhotoCaptureArea({ previewSrc, previewEmoji, onCapture, recentPhotos, disabled }: PhotoCaptureAreaProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (file) onCapture(file);
+  }
+
   return (
     <div>
       <div className="photo-capture-frame">
@@ -31,8 +42,21 @@ export function PhotoCaptureArea({ previewSrc, previewEmoji, onCapture, recentPh
         )}
       </div>
 
-      <button type="button" className="primary-button photo-capture-btn" onClick={onCapture}>
-        <CameraIcon size={18} /> 사진 찍고 AI 분석하기
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        style={{ display: "none" }}
+        onChange={handleFileChange}
+      />
+      <button
+        type="button"
+        className="primary-button photo-capture-btn"
+        disabled={disabled}
+        onClick={() => fileInputRef.current?.click()}
+      >
+        <CameraIcon size={18} /> {disabled ? "분석하는 중..." : "사진 찍고 AI 분석하기"}
       </button>
 
       <section>

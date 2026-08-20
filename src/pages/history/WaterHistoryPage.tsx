@@ -1,20 +1,30 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeToolbar from "@/pages/home/HomeToolbar";
 import HistoryCalendar from "@/pages/history/HistoryCalendar";
-import { generateWeekData, computeWaterStats } from "@/pages/history/waterHistoryMockData";
+import { buildWeekData, computeWaterStats, MOCK_GOAL_ML } from "@/pages/history/waterHistoryMockData";
 import { addDays, formatWeekRange, getWeekStart } from "@/pages/history/dateUtils";
+import { recordsApi, type HealthRecord } from "@/api/records";
 import "@/pages/home/home.css";
 import "@/pages/history/waterHistory.css";
 
-const CHART_MAX_ML = 2500;
+// 그래프 최대치를 목표량(2,000ml)과 동일하게 맞춰서 목표를 채우면 막대가 100% 꽉 차게.
+const CHART_MAX_ML = MOCK_GOAL_ML;
 
 export default function WaterHistoryPage() {
   const navigate = useNavigate();
   const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [records, setRecords] = useState<HealthRecord[]>([]);
 
-  const weekRecords = useMemo(() => generateWeekData(weekStart), [weekStart]);
+  useEffect(() => {
+    recordsApi
+      .list()
+      .then((all) => setRecords(all.filter((r) => r.type === "WATER")))
+      .catch(() => setRecords([]));
+  }, []);
+
+  const weekRecords = useMemo(() => buildWeekData(weekStart, records), [weekStart, records]);
   const stats = useMemo(() => computeWaterStats(weekRecords), [weekRecords]);
 
   function goToPrevWeek() {

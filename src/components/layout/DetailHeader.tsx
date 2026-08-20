@@ -22,7 +22,7 @@ export function DetailHeader({ title, onCalendarClick }: DetailHeaderProps) {
           <CalendarIcon />
         </button>
       ) : (
-        <span className="detail-header-icon-btn" aria-hidden="true" />
+        <span className="detail-header-icon-spacer" aria-hidden="true" />
       )}
     </header>
   );

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { DetailHeader } from "@/components/layout/DetailHeader";
 import { DateChip } from "@/components/layout/DateChip";
 import { formatMonthDay } from "@/pages/history/dateUtils";
+import { recordsApi } from "@/api/records";
+import { ApiError } from "@/api/client";
 import mascotHappy from "@/assets/mascots/mascot-happy.png";
 import mascotSad from "@/assets/mascots/mascot-sad.png";
 import "@/pages/record/emotion/emotion.css";
@@ -12,6 +14,8 @@ const LABELS = ["최악이에요", "별로예요", "보통이에요", "좋아요
 export default function EmotionRecordPage() {
   const navigate = useNavigate();
   const [value, setValue] = useState(80);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const label = useMemo(() => {
     const index = Math.min(LABELS.length - 1, Math.floor(value / (100 / LABELS.length)));
@@ -20,6 +24,19 @@ export default function EmotionRecordPage() {
 
   const mascot = value >= 50 ? mascotHappy : mascotSad;
   const todayLabel = useMemo(() => `${formatMonthDay(new Date())} · 오늘`, []);
+
+  async function handleSave() {
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await recordsApi.create("STRESS_EMOTION", { moodScore: value });
+      navigate("/record");
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "저장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <div className="page">
@@ -52,8 +69,9 @@ export default function EmotionRecordPage() {
           </div>
         </div>
 
-        <button type="button" className="primary-button" onClick={() => navigate("/record")}>
-          기록하기
+        {error && <p className="record-error">{error}</p>}
+        <button type="button" className="primary-button" disabled={isSubmitting} onClick={handleSave}>
+          {isSubmitting ? "저장하는 중..." : "기록하기"}
         </button>
       </div>
     </div>

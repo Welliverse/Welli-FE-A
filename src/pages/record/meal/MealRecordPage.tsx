@@ -30,7 +30,7 @@ export default function MealRecordPage() {
         <PhotoCaptureArea
           previewSrc={mealViewfinder}
           recentPhotos={RECENT_PHOTOS}
-          onCapture={() => navigate("/record/meal/result")}
+          onCapture={(file) => navigate("/record/meal/result", { state: { file } })}
         />
       </div>
     </div>

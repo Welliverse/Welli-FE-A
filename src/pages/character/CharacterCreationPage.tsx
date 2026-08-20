@@ -5,11 +5,10 @@ import { ApiError } from "@/api/client";
 import characterOrb from "@/assets/character-orb.png";
 import "@/pages/character/character.css";
 
-const FAKE_PROGRESS_DURATION_MS = 2200;
-
 export default function CharacterCreationPage() {
   const navigate = useNavigate();
   const [character, setCharacter] = useState<CharacterInfo | null>(null);
+  const [pendingData, setPendingData] = useState<CharacterInfo | null>(null);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [retryKey, setRetryKey] = useState(0);
@@ -22,45 +21,43 @@ export default function CharacterCreationPage() {
   // ref에 저장해 두 번째 effect 실행도 같은 promise를 구독하게 한다.
   const characterPromiseRef = useRef<Promise<CharacterInfo> | null>(null);
 
+  // 분석 리포트 로딩 화면과 동일한 방식 — 진행률 바는 0→100%를 계단식으로 채우고,
+  // 진행률이 다 찬 것 + 실제 캐릭터 생성 응답이 둘 다 준비된 뒤에 결과 화면으로 넘어간다.
+  useEffect(() => {
+    const tick = setInterval(() => {
+      setProgress((prev) => Math.min(prev + 10, 100));
+    }, 180);
+    return () => clearInterval(tick);
+  }, [retryKey]);
+
   useEffect(() => {
     let cancelled = false;
-    const start = performance.now();
-    let raf: number;
-
-    function tick(now: number) {
-      const elapsed = now - start;
-      const pct = Math.min(95, Math.round((elapsed / FAKE_PROGRESS_DURATION_MS) * 95));
-      if (!cancelled) setProgress(pct);
-      if (pct < 95) raf = requestAnimationFrame(tick);
-    }
-    raf = requestAnimationFrame(tick);
-
     if (!characterPromiseRef.current) {
       characterPromiseRef.current = characterApi.create();
     }
     characterPromiseRef.current
       .then((data) => {
-        if (cancelled) return;
-        setProgress(100);
-        setTimeout(() => {
-          if (!cancelled) setCharacter(data);
-        }, 300);
+        if (!cancelled) setPendingData(data);
       })
       .catch((err) => {
         if (cancelled) return;
-        cancelAnimationFrame(raf);
         setError(err instanceof ApiError ? err.message : "캐릭터 생성에 실패했어요. 잠시 후 다시 시도해주세요.");
       });
-
     return () => {
       cancelled = true;
-      cancelAnimationFrame(raf);
     };
   }, [retryKey]);
+
+  useEffect(() => {
+    if (progress < 100 || !pendingData) return;
+    const timeout = setTimeout(() => setCharacter(pendingData), 300);
+    return () => clearTimeout(timeout);
+  }, [progress, pendingData]);
 
   function handleRetry() {
     setError(null);
     setProgress(0);
+    setPendingData(null);
     characterPromiseRef.current = null;
     setRetryKey((prev) => prev + 1);
   }
