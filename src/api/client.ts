@@ -17,11 +17,13 @@ export class ApiError extends Error {
   }
 }
 
+// BE 공통 에러 응답: { status, code, message, path } 평평한 구조로 통일됨
+// (인증 401 / 권한 403 / 검증 400 INVALID_REQUEST / 서버 500 INTERNAL_SERVER_ERROR 전부 동일 포맷).
 interface ApiErrorBody {
-  error?: {
-    code?: string;
-    message?: string;
-  };
+  status?: number;
+  code?: string;
+  message?: string;
+  path?: string;
 }
 
 type RequestOptions = {
@@ -48,11 +50,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     } catch {
       // 응답 본문이 없거나 JSON이 아닌 경우 기본 메시지로 대체
     }
-    throw new ApiError(
-      res.status,
-      body.error?.code ?? "UNKNOWN",
-      body.error?.message ?? "요청 처리 중 오류가 발생했습니다.",
-    );
+    throw new ApiError(res.status, body.code ?? "UNKNOWN", body.message ?? "요청 처리 중 오류가 발생했습니다.");
   }
 
   if (res.status === 204) return undefined as T;

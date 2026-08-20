@@ -2,9 +2,9 @@ import { OnboardingLayout } from "@/pages/onboarding/OnboardingLayout";
 import type { Gender } from "@/api/profile";
 
 const GENDER_OPTIONS: { value: Gender; label: string; emoji: string }[] = [
-  { value: "female", label: "여성", emoji: "👩" },
-  { value: "male", label: "남성", emoji: "👨" },
-  { value: "other", label: "기타 / 선택 안함", emoji: "🙂" },
+  { value: "FEMALE", label: "여성", emoji: "👩" },
+  { value: "MALE", label: "남성", emoji: "👨" },
+  { value: "OTHER", label: "기타 / 선택 안함", emoji: "🙂" },
 ];
 
 interface GenderStepProps {
