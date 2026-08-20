@@ -1,0 +1,167 @@
+.mypage-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--welli-input-bg);
+  padding: 44px 0 110px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mypage-page::-webkit-scrollbar {
+  display: none;
+}
+
+/* 기록 히스토리 아코디언이 펼쳐져 카드가 길어지면 페이지가 뷰포트보다
+   길어지는데, 이 페이지는 자체 스크롤 컨테이너가 아니라 문서(body)가
+   스크롤되는 구조라 sticky로는 툴바가 화면 밖으로 사라진다. 뷰포트에
+   고정되도록 fixed로 앱 프레임(390px) 중앙에 맞춰 붙인다. */
+.mypage-page .home-toolbar-wrap {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 390px;
+}
+
+.mypage-header {
+  padding: 14px 32px;
+  text-align: center;
+}
+
+.mypage-header h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27px;
+  letter-spacing: -0.3px;
+  color: var(--welli-purple-100);
+}
+
+.mypage-profile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 32px;
+  margin-top: 39px;
+}
+
+.mypage-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.mypage-profile-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.mypage-nickname {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 27px;
+  letter-spacing: -0.3px;
+  color: #000;
+}
+
+.mypage-email {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20.3px;
+  letter-spacing: -0.14px;
+  color: var(--welli-gray-90);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mypage-menu {
+  margin: 81px 32px 0;
+  padding: 32px 24px;
+  border-radius: 12px;
+  background: var(--welli-page-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mypage-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+  color: #c4c5c8;
+}
+
+.mypage-menu-item-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mypage-menu-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20.3px;
+  letter-spacing: -0.14px;
+  color: #000;
+}
+
+.mypage-menu-chevron {
+  display: flex;
+  color: var(--welli-text-muted);
+  transition: transform 0.2s ease;
+}
+
+.mypage-menu-chevron.open {
+  transform: rotate(90deg);
+}
+
+.mypage-menu-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.mypage-history-sublist {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  padding: 4px 16px;
+  border-radius: 10px;
+  background: var(--welli-input-bg);
+}
+
+.mypage-history-subitem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--welli-border);
+  padding: 12px 0;
+  font-family: inherit;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.13px;
+  color: var(--welli-gray-90);
+  text-align: left;
+}
+
+.mypage-history-subitem:last-child {
+  border-bottom: none;
+}

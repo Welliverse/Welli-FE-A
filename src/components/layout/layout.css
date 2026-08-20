@@ -1,0 +1,212 @@
+/* ---------- 페이지 공용 프레임 ---------- */
+.page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100%;
+  padding-bottom: 24px;
+  background: #f5f5f7;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.page::-webkit-scrollbar {
+  display: none;
+}
+
+.page-content {
+  flex: 1;
+  padding: 20px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.page-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--welli-text-dark);
+  margin: 0;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--welli-card-border);
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.primary-button {
+  height: 52px;
+  border: none;
+  border-radius: 14px;
+  background: var(--welli-purple);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.primary-button:hover {
+  background: var(--welli-purple-dark);
+}
+
+.primary-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.record-error {
+  margin: 0;
+  font-size: 13px;
+  color: var(--welli-warning);
+  text-align: center;
+}
+
+/* ---------- DetailHeader ---------- */
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 12px 8px;
+}
+
+.detail-header-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--welli-text-dark);
+  margin: 0;
+}
+
+.detail-header-icon-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--welli-text-dark);
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.detail-header-icon-btn:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* 오른쪽 버튼이 없는 화면(예: 피부 기록)에서 레이아웃 균형만 맞추는 빈 자리 —
+   버튼처럼 hover 음영이나 커서가 나오면 안 되므로 크기만 가져오고 인터랙션 스타일은 뺀다. */
+.detail-header-icon-spacer {
+  width: 40px;
+  height: 40px;
+}
+
+/* ---------- DateChip ---------- */
+.date-chip {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--welli-purple-light);
+  color: var(--welli-purple-dark);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---------- WeekNav ---------- */
+.week-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.week-nav-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--welli-text-dark);
+  cursor: pointer;
+}
+
+.week-nav-label {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--welli-text-dark);
+}
+
+/* ---------- PhotoCaptureArea ---------- */
+.photo-capture-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #efeeff, #e6e4fb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-capture-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-capture-emoji-bg {
+  font-size: 84px;
+}
+
+.photo-capture-guide {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 62%;
+  height: 62%;
+  border: 2.5px dashed rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+}
+
+.photo-capture-btn {
+  width: 100%;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.photo-capture-recent-title {
+  margin: 4px 0 12px;
+}
+
+.photo-capture-recent-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.photo-capture-recent-thumb {
+  aspect-ratio: 1;
+  border-radius: 12px;
+  object-fit: cover;
+  background: #eceaf7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}

@@ -1,0 +1,88 @@
+import badgeStreak from "@/assets/icons/badge-streak.png";
+import badgeWater from "@/assets/icons/badge-water.png";
+import badgeRoutine from "@/assets/icons/badge-routine.png";
+
+// TODO(BE): mockRoutines는 실제 GET /routines/recommendations로 대체됨(HomePage.tsx 참고).
+// mockCondition의 "수분"/"마음"도 오늘 저장된 실제 WATER/STRESS_EMOTION 기록으로 대체됨
+// (HomePage.tsx 참고) — /records에서 직접 집계 가능해서 가능했음. "영양"/"에너지"는 여전히 mock —
+// 식사(MEAL)는 있지만 AI 채점이 없어 점수화가 안 되고, "에너지"에 명확히 대응하는 기록 타입이 없음.
+// mockLevel도 GET /characters/me의 growthStage(Lv.)/growthScore(EXP)/appearanceState(단계명)로
+// 대체됨(HomePage.tsx 참고) — API 실패 시 폴백으로만 쓰임. mockDailyMessage는 여전히 mock.
+
+export interface ConditionStat {
+  label: string;
+  value: number; // 0~100
+}
+
+export interface ConditionData {
+  status: string;
+  emoji: string;
+  stats: ConditionStat[];
+}
+
+export const mockCondition: ConditionData = {
+  status: "좋음",
+  emoji: "😊",
+  stats: [
+    { label: "수분", value: 66 },
+    { label: "영양", value: 72 },
+    { label: "에너지", value: 55 },
+    { label: "마음", value: 80 },
+  ],
+};
+
+export const mockDailyMessage = "오늘 피부 광채가 88%예요! 꿀잠 잔 보람이 있네요✨";
+
+export interface RoutineItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  done: boolean;
+}
+
+export interface LevelData {
+  level: number;
+  currentExp: number;
+  maxExp: number;
+  stageName: string;
+}
+
+export const mockLevel: LevelData = {
+  level: 13,
+  currentExp: 820,
+  maxExp: 1200,
+  stageName: "건강한 강아지",
+};
+
+export interface BadgeItem {
+  id: string;
+  label: string;
+  icon: string;
+}
+
+export const mockBadges: BadgeItem[] = [
+  { id: "streak", label: "7일 연속", icon: badgeStreak },
+  { id: "water", label: "수분 마스터", icon: badgeWater },
+  { id: "routine", label: "루틴 챔피언", icon: badgeRoutine },
+];
+
+export interface DailyReport {
+  mood: "good" | "bad";
+  message: string;
+  stageName: string;
+}
+
+export const mockDailyReport: Record<"good" | "bad", DailyReport> = {
+  good: {
+    mood: "good",
+    message:
+      "오늘은 수면이 잘 지켜져서 피부가 한결 맑아졌어요! 물 섭취도 충분하고, 가벼운 운동까지! 스트레스가 조금 늘었지만 내일은 더 좋은 하루가 될 거예요!",
+    stageName: "건강한 강아지",
+  },
+  bad: {
+    mood: "bad",
+    message:
+      "오늘은 수면이 잘 지켜지지 못한 것 같아요... 😢 피부도 지치고, 기운도 떨어졌어요. 너무 자책하지 마세요! 내일은 조금 더 잘 지켜보자구요. 작은 변화가 큰 차이를 만들어요!",
+    stageName: "피곤한 강아지",
+  },
+};

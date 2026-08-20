@@ -5,11 +5,18 @@
 html,
 body {
   height: 100%;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Segoe UI", sans-serif;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", sans-serif;
   color: #1a1a1a;
   display: flex;
   justify-content: center;
@@ -21,37 +28,63 @@ button {
 }
 
 /*
-  TODO(design): 임시 값입니다. Figma Dev mode 토큰 나오면
-  이 파일을 디자인 시스템 토큰(색상/폰트/간격 변수)으로 교체하세요.
+  피그마 디자인가이드(Color Palette / Foundation) Dev Mode 값 기준.
+  --welli-primary-dark, --welli-border는 Dev Mode에 hover/보더 값이 따로
+  없어서 근사치 — 실제 값 나오면 교체.
 */
 :root {
-  --welli-primary: #ff7a45;
-  --welli-primary-dark: #e8632e;
+  --welli-primary: #7a69fc;
+  --welli-primary-dark: #6957e0;
+  --welli-purple-100: #2b2558;
+  --welli-purple-20: #ebe9ff;
+  --welli-purple-10: #f2f0ff;
   --welli-error: #e53e3e;
-  --welli-border: #d9d9df;
-  --welli-text-muted: #6b6b76;
+  --welli-border: #e4e4ea;
+  --welli-text-muted: #939496;
+  --welli-input-bg: #f5f6fa;
+  --welli-page-bg: #fcfcfd;
+  --welli-disabled-bg: #dddde1;
+  --welli-disabled-text: #6e6f70;
+  --welli-gray-90: #6e6f70;
+  --welli-warning: #ff5a67;
+
+  /* 기록 화면(Welli_poto) 전용 별칭/상태 팔레트 — 위 기본 토큰에 맞춰 매핑 */
+  --welli-purple: var(--welli-primary);
+  --welli-purple-dark: var(--welli-primary-dark);
+  --welli-purple-light: var(--welli-purple-20);
+  --welli-purple-pale: var(--welli-purple-10);
+  --welli-card-border: var(--welli-border);
+  --welli-text-dark: #1a1a1a;
+  --welli-good: #4dd18a;
+  --welli-good-bg: #dff5e8;
+  --welli-neutral: #ffb020;
+  --welli-neutral-bg: #fdedd3;
+  --welli-bad: #f2565b;
+  --welli-bad-bg: #fbdede;
 }
 
 /*
-  화면 기본 비율 390:844 (모바일 프레임). 모든 화면은 이 안에 그려지므로
-  개별 페이지에서 별도로 신경 쓸 필요 없음. 실제 모바일(≤390px)에서는
-  화면 전체를 그대로 채움.
+  화면 기본 비율 390:844 (모바일 프레임). 높이는 844로 고정하지 않고 실제
+  뷰포트 높이에 항상 꽉 채워지도록 한다 — 고정 높이로 두면 뷰포트가 그보다
+  작을 때 화면 전환마다 아래쪽 내용이 잘려 보이는 문제가 있었다. dvh는 모바일
+  브라우저 주소창 등 UI가 접히고 펼쳐지는 것까지 반영하는 동적 뷰포트 높이.
+  개별 페이지에서 별도로 신경 쓸 필요 없음.
 */
 #root {
   width: 100%;
   max-width: 390px;
-  min-height: 100%;
+  height: 100vh;
+  height: 100dvh;
   margin: 0 auto;
-  background: #f5f5f7;
+  background: var(--welli-page-bg);
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 @media (min-width: 391px) {
   #root {
-    min-height: 844px;
     box-shadow: 0 0 0 1px var(--welli-border);
   }
 }

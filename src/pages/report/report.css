@@ -1,0 +1,228 @@
+/* ---------- 분석 리포트: AI 분석 중 ---------- */
+.report-loading-page {
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  padding: 64px 24px 40px;
+  gap: 32px;
+  background: radial-gradient(circle at 50% 15%, #eef0ff, #f5f5f7 70%);
+}
+
+.report-loading-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.report-loading-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--welli-text-dark);
+  margin: 0;
+}
+
+.report-loading-subtitle {
+  font-size: 14px;
+  color: var(--welli-text-muted);
+  margin: 0;
+}
+
+.report-loading-mascot {
+  width: 240px;
+  height: auto;
+}
+
+.report-loading-progress {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.report-loading-progress-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--welli-text-dark);
+  margin: 0;
+}
+
+.report-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.report-progress-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--welli-border);
+  overflow: hidden;
+}
+
+.report-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--welli-purple);
+  transition: width 0.2s ease;
+}
+
+.report-progress-percent {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--welli-text-dark);
+  min-width: 32px;
+  text-align: right;
+}
+
+/* ---------- 분석 리포트: 결과 ---------- */
+.report-score-card {
+  text-align: left;
+}
+
+.report-score-label {
+  font-size: 13px;
+  color: var(--welli-text-muted);
+  margin: 0 0 8px;
+}
+
+.report-score-value {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--welli-purple);
+  margin: 0 0 6px;
+}
+
+.report-score-value small {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--welli-text-muted);
+}
+
+.report-score-delta {
+  font-size: 13px;
+  color: var(--welli-text-muted);
+  margin: 0;
+}
+
+.report-score-delta strong {
+  color: var(--welli-good);
+  font-weight: 700;
+}
+
+.report-radar-card {
+  display: flex;
+  justify-content: center;
+  padding: 20px 8px;
+}
+
+.report-radar-chart {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  overflow: visible;
+}
+
+.report-radar-grid {
+  fill: none;
+  stroke: var(--welli-border);
+  stroke-width: 1;
+}
+
+.report-radar-axis {
+  stroke: var(--welli-border);
+  stroke-width: 1;
+}
+
+.report-radar-data {
+  fill: url(#reportRadarFill);
+  stroke: var(--welli-purple-dark);
+  stroke-width: 1.5;
+}
+
+.report-radar-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  fill: var(--welli-text-dark);
+}
+
+.report-comment-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid var(--welli-card-border);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.report-comment-avatar {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.report-comment-text {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--welli-text-dark);
+  line-height: 1.5;
+}
+
+/* ---------- 분석 리포트: 레벨업 ---------- */
+.report-levelup-page {
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  padding: 48px 24px 24px;
+  gap: 24px;
+  background: radial-gradient(circle at 50% 20%, #efeeff, #f5f5f7 70%);
+}
+
+.report-levelup-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--welli-text-dark);
+  margin: 0;
+}
+
+.report-levelup-mascot {
+  width: 280px;
+  height: auto;
+}
+
+.report-levelup-bottom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.report-levelup-desc {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--welli-text-dark);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.report-levelup-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 999px;
+  background: var(--welli-purple-light);
+  color: var(--welli-purple-dark);
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.report-levelup-button:hover {
+  background: var(--welli-purple-pale);
+}

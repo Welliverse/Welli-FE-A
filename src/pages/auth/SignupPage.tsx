@@ -1,12 +1,12 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthLayout } from "@/pages/auth/AuthLayout";
-import { validateEmail, validatePassword } from "@/pages/auth/validation";
+import { validateEmail, validateNickname, validatePassword } from "@/pages/auth/validation";
 import { authApi } from "@/api/auth";
 import { ApiError } from "@/api/client";
-import { useAuthStore } from "@/store/authStore";
 
 interface FieldErrors {
+  nickname?: string;
   email?: string;
   password?: string;
   passwordConfirm?: string;
@@ -14,8 +14,8 @@ interface FieldErrors {
 
 export default function SignupPage() {
   const navigate = useNavigate();
-  const setAuth = useAuthStore((state) => state.setAuth);
 
+  const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -28,19 +28,20 @@ export default function SignupPage() {
     setFormError(null);
 
     const errors: FieldErrors = {
+      nickname: validateNickname(nickname) ?? undefined,
       email: validateEmail(email) ?? undefined,
       password: validatePassword(password) ?? undefined,
       passwordConfirm:
         password && passwordConfirm !== password ? "비밀번호가 일치하지 않습니다." : undefined,
     };
     setFieldErrors(errors);
-    if (errors.email || errors.password || errors.passwordConfirm) return;
+    if (errors.nickname || errors.email || errors.password || errors.passwordConfirm) return;
 
     setIsSubmitting(true);
     try {
-      const { user, token } = await authApi.signup({ email, password });
-      setAuth(user, token);
-      navigate("/onboarding");
+      await authApi.signup({ email, password, nickname: nickname.trim() });
+      // 회원가입 응답에는 토큰이 없어서 자동 로그인이 불가 — 로그인 화면으로 이동
+      navigate("/login", { state: { signupSuccess: true } });
     } catch (err) {
       setFormError(err instanceof ApiError ? err.message : "회원가입 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
     } finally {
@@ -49,47 +50,66 @@ export default function SignupPage() {
   }
 
   return (
-    <AuthLayout title="Welli 회원가입" subtitle="몇 가지만 입력하면 바로 시작할 수 있어요">
+    <AuthLayout title="Welli" subtitle="몇 가지만 입력하면 바로 시작할 수 있어요">
       <form className="auth-form" onSubmit={handleSubmit} noValidate>
         {formError && <p className="auth-form-error">{formError}</p>}
 
-        <div className="auth-field">
-          <label htmlFor="email">이메일</label>
-          <input
-            id="email"
-            type="email"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            aria-invalid={Boolean(fieldErrors.email)}
-          />
-          {fieldErrors.email && <p className="auth-field-error">{fieldErrors.email}</p>}
-        </div>
+        <div className="auth-field-group">
+          <div className="auth-field">
+            <input
+              id="nickname"
+              type="text"
+              autoComplete="nickname"
+              aria-label="닉네임"
+              placeholder="닉네임 입력"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              aria-invalid={Boolean(fieldErrors.nickname)}
+            />
+            {fieldErrors.nickname && <p className="auth-field-error">{fieldErrors.nickname}</p>}
+          </div>
 
-        <div className="auth-field">
-          <label htmlFor="password">비밀번호</label>
-          <input
-            id="password"
-            type="password"
-            autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            aria-invalid={Boolean(fieldErrors.password)}
-          />
-          {fieldErrors.password && <p className="auth-field-error">{fieldErrors.password}</p>}
-        </div>
+          <div className="auth-field">
+            <input
+              id="email"
+              type="email"
+              autoComplete="email"
+              aria-label="이메일"
+              placeholder="이메일 입력"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              aria-invalid={Boolean(fieldErrors.email)}
+            />
+            {fieldErrors.email && <p className="auth-field-error">{fieldErrors.email}</p>}
+          </div>
 
-        <div className="auth-field">
-          <label htmlFor="passwordConfirm">비밀번호 확인</label>
-          <input
-            id="passwordConfirm"
-            type="password"
-            autoComplete="new-password"
-            value={passwordConfirm}
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-            aria-invalid={Boolean(fieldErrors.passwordConfirm)}
-          />
-          {fieldErrors.passwordConfirm && <p className="auth-field-error">{fieldErrors.passwordConfirm}</p>}
+          <div className="auth-field">
+            <input
+              id="password"
+              type="password"
+              autoComplete="new-password"
+              aria-label="비밀번호"
+              placeholder="비밀번호 입력"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              aria-invalid={Boolean(fieldErrors.password)}
+            />
+            {fieldErrors.password && <p className="auth-field-error">{fieldErrors.password}</p>}
+          </div>
+
+          <div className="auth-field">
+            <input
+              id="passwordConfirm"
+              type="password"
+              autoComplete="new-password"
+              aria-label="비밀번호 확인"
+              placeholder="비밀번호 확인"
+              value={passwordConfirm}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+              aria-invalid={Boolean(fieldErrors.passwordConfirm)}
+            />
+            {fieldErrors.passwordConfirm && <p className="auth-field-error">{fieldErrors.passwordConfirm}</p>}
+          </div>
         </div>
 
         <button type="submit" className="auth-submit" disabled={isSubmitting}>
