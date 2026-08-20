@@ -1,4 +1,4 @@
-import { apiClient, ApiError, BASE_URL, USE_MOCK } from "@/api/client";
+import { apiClient, ApiError, USE_MOCK } from "@/api/client";
 
 export interface AuthUser {
   userId: number;
@@ -13,8 +13,11 @@ export interface SignupRequest {
   nickname: string;
 }
 
+// BE 명세: 201 Created, { userId, email, nickname } — 토큰은 안 옴(자동 로그인 없음).
 export interface SignupResponse {
-  message: string;
+  userId: number;
+  email: string;
+  nickname: string;
 }
 
 export interface LoginRequest {
@@ -27,36 +30,14 @@ export interface LoginResponse {
   user: AuthUser;
 }
 
-// BE /auth/login 응답에는 onboardingCompleted가 내려오지 않는다(FE-B 확인) —
-// 로그인 직후 /users/me를 한 번 더 호출해서 프로필이 채워졌는지로 판단한다.
+// BE /auth/login 응답도 onboardingCompleted를 평평하게(flat) 내려준다 — user로
+// 감싸져 오지 않으므로 FE 내부용 LoginResponse.user 형태로 여기서만 변환한다.
 interface RawLoginResponse {
   accessToken: string;
   userId: number;
   email: string;
   nickname: string;
-}
-
-interface RawUserMeResponse {
-  userId: number;
-  email: string;
-  nickname: string;
-  age: number | null;
-  gender: string | null;
-  healthGoal: string | null;
-}
-
-async function fetchOnboardingCompleted(token: string): Promise<boolean> {
-  try {
-    const res = await fetch(`${BASE_URL}/users/me`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    if (!res.ok) return false;
-    const data: RawUserMeResponse = await res.json();
-    return Boolean(data.age && data.gender && data.healthGoal);
-  } catch {
-    // 조회 실패해도 로그인 자체는 막지 않고 온보딩부터 다시 타게 한다.
-    return false;
-  }
+  onboardingCompleted: boolean;
 }
 
 const MOCK_DELAY_MS = 500;
@@ -92,7 +73,7 @@ async function mockSignup({ email, password, nickname }: SignupRequest): Promise
   const userId = Date.now();
   users[email] = { userId, email, password, nickname, onboardingCompleted: false };
   saveMockUsers(users);
-  return { message: "회원가입이 완료되었습니다." };
+  return { userId, email, nickname };
 }
 
 async function mockLogin({ email, password }: LoginRequest): Promise<LoginResponse> {
@@ -126,14 +107,13 @@ export function markMockOnboardingCompleted(userId: number) {
 
 async function realLogin(credentials: LoginRequest): Promise<LoginResponse> {
   const raw = await apiClient.post<RawLoginResponse>("/auth/login", credentials);
-  const onboardingCompleted = await fetchOnboardingCompleted(raw.accessToken);
   return {
     accessToken: raw.accessToken,
     user: {
       userId: raw.userId,
       email: raw.email,
       nickname: raw.nickname,
-      onboardingCompleted,
+      onboardingCompleted: raw.onboardingCompleted,
     },
   };
 }

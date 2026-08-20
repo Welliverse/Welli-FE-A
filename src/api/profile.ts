@@ -2,22 +2,17 @@ import { apiClient, ApiError, USE_MOCK } from "@/api/client";
 import { markMockOnboardingCompleted } from "@/api/auth";
 import { useAuthStore } from "@/store/authStore";
 
-export type Gender = "female" | "male" | "other";
+// BE 명세: FEMALE만 예시로 확인됨 — MALE/OTHER는 같은 대문자 스네이크 표기 관례를
+// 따른 추정치. 실제 값 다르면 여기만 교체하면 됨.
+export type Gender = "FEMALE" | "MALE" | "OTHER";
 
-// TODO(BE): 건강목표 enum 값이 명세서에 필드명(healthGoal)만 있고 각 항목의
-// 실제 코드값은 없어서 임시로 정함 — BE 확정되면 이 값들만 교체하면 됨.
-export type HealthGoalCode =
-  | "skinCare"
-  | "sleepImprovement"
-  | "exerciseHabit"
-  | "dietManagement"
-  | "stressManagement"
-  | "hydration";
+// BE 명세: healthGoal은 다중 선택 배열이 아니라 단일 enum 값.
+export type HealthGoalCode = "SKIN_CARE" | "SLEEP" | "WEIGHT_MANAGEMENT" | "HEALTHY_HABIT";
 
 export interface UpdateProfileRequest {
   age: number;
   gender: Gender;
-  healthGoal: HealthGoalCode[];
+  healthGoal: HealthGoalCode;
 }
 
 const MOCK_DELAY_MS = 400;
@@ -44,13 +39,7 @@ export const profileApi = {
     if (USE_MOCK) {
       await mockUpdateProfile(payload);
     } else {
-      // BE는 healthGoal을 배열이 아니라 문자열 하나로 받음 — 여러 개 선택한
-      // 건강목표는 쉼표로 이어붙여서 보낸다(멀티 선택 UI는 그대로 유지).
-      await apiClient.patch<void>("/users/me/profile", {
-        age: payload.age,
-        gender: payload.gender,
-        healthGoal: payload.healthGoal.join(","),
-      });
+      await apiClient.patch<void>("/users/me/profile", payload);
     }
     useAuthStore.getState().markOnboardingCompleted();
   },

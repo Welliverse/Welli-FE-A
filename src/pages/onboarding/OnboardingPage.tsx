@@ -11,12 +11,12 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(0);
   const [age, setAge] = useState(26);
   const [gender, setGender] = useState<Gender | null>(null);
-  const [healthGoal, setHealthGoal] = useState<HealthGoalCode[]>([]);
+  const [healthGoal, setHealthGoal] = useState<HealthGoalCode | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
   async function handleFinish() {
-    if (!gender || healthGoal.length === 0) return;
+    if (!gender || !healthGoal) return;
     setFormError(null);
     setIsSubmitting(true);
     try {
@@ -37,14 +37,10 @@ export default function OnboardingPage() {
     return <GenderStep gender={gender} onChange={setGender} onNext={() => setStep(2)} onBack={() => setStep(0)} />;
   }
 
-  function toggleHealthGoal(goal: HealthGoalCode) {
-    setHealthGoal((prev) => (prev.includes(goal) ? prev.filter((g) => g !== goal) : [...prev, goal]));
-  }
-
   return (
     <HealthGoalStep
       selected={healthGoal}
-      onToggle={toggleHealthGoal}
+      onSelect={setHealthGoal}
       onSubmit={handleFinish}
       onBack={() => setStep(1)}
       isSubmitting={isSubmitting}
