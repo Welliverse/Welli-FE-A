@@ -1,4 +1,4 @@
-import { apiClient, ApiError, USE_MOCK } from "@/api/client";
+import { apiClient, ApiError, BASE_URL, USE_MOCK } from "@/api/client";
 
 export interface AuthUser {
   userId: number;
@@ -27,15 +27,36 @@ export interface LoginResponse {
   user: AuthUser;
 }
 
-// BE 명세: 로그인 응답은 { accessToken, userId, email, nickname, onboardingCompleted }
-// 형태로 평평하게(flat) 내려온다 — user로 감싸져 오지 않음. FE 내부에서는 다루기 편하도록
-// LoginResponse.user로 묶어주고, 이 변환은 authApi.login 안에서만 처리한다.
-interface LoginApiResponse {
+// BE /auth/login 응답에는 onboardingCompleted가 내려오지 않는다(FE-B 확인) —
+// 로그인 직후 /users/me를 한 번 더 호출해서 프로필이 채워졌는지로 판단한다.
+interface RawLoginResponse {
   accessToken: string;
   userId: number;
   email: string;
   nickname: string;
-  onboardingCompleted: boolean;
+}
+
+interface RawUserMeResponse {
+  userId: number;
+  email: string;
+  nickname: string;
+  age: number | null;
+  gender: string | null;
+  healthGoal: string | null;
+}
+
+async function fetchOnboardingCompleted(token: string): Promise<boolean> {
+  try {
+    const res = await fetch(`${BASE_URL}/users/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!res.ok) return false;
+    const data: RawUserMeResponse = await res.json();
+    return Boolean(data.age && data.gender && data.healthGoal);
+  } catch {
+    // 조회 실패해도 로그인 자체는 막지 않고 온보딩부터 다시 타게 한다.
+    return false;
+  }
 }
 
 const MOCK_DELAY_MS = 500;
@@ -104,14 +125,15 @@ export function markMockOnboardingCompleted(userId: number) {
 }
 
 async function realLogin(credentials: LoginRequest): Promise<LoginResponse> {
-  const raw = await apiClient.post<LoginApiResponse>("/auth/login", credentials);
+  const raw = await apiClient.post<RawLoginResponse>("/auth/login", credentials);
+  const onboardingCompleted = await fetchOnboardingCompleted(raw.accessToken);
   return {
     accessToken: raw.accessToken,
     user: {
       userId: raw.userId,
       email: raw.email,
       nickname: raw.nickname,
-      onboardingCompleted: raw.onboardingCompleted,
+      onboardingCompleted,
     },
   };
 }

@@ -12,17 +12,11 @@ const CHART_MAX_MINUTES = 75;
 
 export default function ExerciseHistoryPage() {
   const navigate = useNavigate();
-  const [notice, setNotice] = useState<string | null>(null);
   const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
   const [calendarOpen, setCalendarOpen] = useState(false);
 
   const weekRecords = useMemo(() => generateWeekData(weekStart), [weekStart]);
   const highlights = useMemo(() => computeExerciseHighlights(weekRecords), [weekRecords]);
-
-  function showNotReady() {
-    setNotice("아직 준비 중인 화면이에요.");
-    window.setTimeout(() => setNotice(null), 1500);
-  }
 
   function goToPrevWeek() {
     setWeekStart((prev) => addDays(prev, -7));
@@ -74,7 +68,7 @@ export default function ExerciseHistoryPage() {
           <div className="exercise-history-bars">
             {weekRecords.map((record) => (
               <div className="exercise-history-bar-col" key={record.date}>
-                <div className="exercise-history-bar-track">
+                <div className={`exercise-history-bar-track exercise-history-bar-track--${record.status}`}>
                   <div
                     className={`exercise-history-bar-fill exercise-history-bar-fill--${record.status}`}
                     style={{ height: `${Math.min(100, (record.minutes / CHART_MAX_MINUTES) * 100)}%` }}
@@ -140,15 +134,13 @@ export default function ExerciseHistoryPage() {
           </div>
         </div>
 
-        {notice && <p className="home-toast">{notice}</p>}
-
         <div className="home-toolbar-wrap">
           <HomeToolbar
             active="record"
             onSelect={(key) => {
               if (key === "home") navigate("/home");
+              else if (key === "routine") navigate("/routine");
               else if (key === "my") navigate("/mypage");
-              else if (key !== "record") showNotReady();
             }}
           />
         </div>

@@ -1,0 +1,115 @@
+.water-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.water-amount-value {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--welli-purple);
+}
+
+.water-amount-value small {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.water-amount-goal {
+  font-size: 16px;
+  color: #c7c7d1;
+  font-weight: 600;
+}
+
+.water-illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 12px 0;
+}
+
+.water-illustration-img {
+  width: 172px;
+  height: auto;
+}
+
+.water-scale {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  font-size: 13px;
+  color: #c7c7d1;
+  font-weight: 600;
+}
+
+.water-scale li.water-scale-mark--active {
+  color: var(--welli-text-dark);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.water-quick-title {
+  margin-bottom: 12px;
+}
+
+.water-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.water-quick-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid var(--welli-card-border);
+  border-radius: 16px;
+  padding: 16px 8px;
+}
+
+.water-quick-icon {
+  width: 36px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.water-quick-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--welli-text-dark);
+}
+
+.water-quick-ml {
+  font-size: 12px;
+  color: var(--welli-text-muted);
+}
+
+.water-quick-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+}
+
+.water-quick-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: var(--welli-purple-light);
+  color: var(--welli-purple-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.water-quick-btn--minus {
+  background: #f1f1f5;
+  color: var(--welli-text-muted);
+}

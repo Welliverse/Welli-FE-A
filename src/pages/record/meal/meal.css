@@ -1,0 +1,200 @@
+.meal-result-header {
+  display: flex;
+  gap: 14px;
+}
+
+.meal-result-thumb {
+  width: 88px;
+  height: 88px;
+  border-radius: 14px;
+  background: var(--welli-purple-pale);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  flex-shrink: 0;
+}
+
+.meal-result-tag {
+  font-size: 12px;
+  color: var(--welli-purple-dark);
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.meal-result-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--welli-text-dark);
+  margin: 0 0 4px;
+}
+
+.meal-result-desc {
+  font-size: 12.5px;
+  color: var(--welli-text-muted);
+  margin: 0 0 8px;
+}
+
+.meal-result-similarity {
+  display: inline-block;
+  background: var(--welli-purple-light);
+  color: var(--welli-purple-dark);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.meal-calorie-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.meal-status-badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
+.meal-status-badge--neutral {
+  color: var(--welli-neutral);
+  background: var(--welli-neutral-bg);
+}
+
+.meal-calorie-value {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--welli-text-dark);
+  margin: 10px 0 2px;
+}
+
+.meal-calorie-value small {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.meal-calorie-caption {
+  font-size: 12.5px;
+  color: var(--welli-text-muted);
+  margin: 0 0 10px;
+}
+
+.meal-progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: #eceaf7;
+  overflow: hidden;
+}
+
+.meal-progress-fill {
+  height: 100%;
+  background: var(--welli-good);
+  border-radius: 999px;
+}
+
+.meal-nutrient-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.meal-nutrient-caption {
+  font-size: 12px;
+  color: var(--welli-text-muted);
+}
+
+.meal-nutrient-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.meal-nutrient-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: #fff;
+  border: 1px solid var(--welli-card-border);
+  border-radius: 12px;
+  padding: 12px 4px;
+}
+
+.meal-nutrient-label {
+  font-size: 11.5px;
+  color: var(--welli-text-muted);
+}
+
+.meal-nutrient-value {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--welli-text-dark);
+}
+
+.meal-nutrient-percent {
+  font-size: 10.5px;
+  color: #b7b7c2;
+}
+
+.meal-nutrient-footnote {
+  font-size: 11px;
+  color: #b7b7c2;
+  margin: 8px 0 0;
+}
+
+.meal-status-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.meal-status-emoji {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--welli-good-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.meal-status-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--welli-text-dark);
+  margin: 0 0 2px;
+}
+
+.meal-status-desc {
+  font-size: 12.5px;
+  color: var(--welli-text-muted);
+  margin: 0;
+}
+
+.meal-tip-banner {
+  background: var(--welli-purple-pale);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+.meal-tip-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--welli-text-dark);
+  margin: 0 0 8px;
+}
+
+.meal-tip-banner ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12.5px;
+  color: var(--welli-text-muted);
+}

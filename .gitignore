@@ -1,9 +1,11 @@
 node_modules
 dist
 dist-ssr
+Welli_poto/
 *.local
 .env
 .env.local
 *.tsbuildinfo
 .vite
 .claude/launch.json
+.playwright-mcp/

@@ -6,6 +6,14 @@
   padding: 40px 32px 32px;
   background: var(--welli-purple-10);
   text-align: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.character-page::-webkit-scrollbar {
+  display: none;
 }
 
 .character-title {

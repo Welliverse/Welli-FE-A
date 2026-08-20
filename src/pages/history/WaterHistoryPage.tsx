@@ -11,17 +11,11 @@ const CHART_MAX_ML = 2500;
 
 export default function WaterHistoryPage() {
   const navigate = useNavigate();
-  const [notice, setNotice] = useState<string | null>(null);
   const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
   const [calendarOpen, setCalendarOpen] = useState(false);
 
   const weekRecords = useMemo(() => generateWeekData(weekStart), [weekStart]);
   const stats = useMemo(() => computeWaterStats(weekRecords), [weekRecords]);
-
-  function showNotReady() {
-    setNotice("아직 준비 중인 화면이에요.");
-    window.setTimeout(() => setNotice(null), 1500);
-  }
 
   function goToPrevWeek() {
     setWeekStart((prev) => addDays(prev, -7));
@@ -73,7 +67,7 @@ export default function WaterHistoryPage() {
           <div className="water-history-bars">
             {weekRecords.map((record) => (
               <div className="water-history-bar-col" key={record.date}>
-                <div className="water-history-bar-track">
+                <div className={`water-history-bar-track water-history-bar-track--${record.status}`}>
                   <div
                     className={`water-history-bar-fill water-history-bar-fill--${record.status}`}
                     style={{ height: `${Math.min(100, (record.valueMl / CHART_MAX_ML) * 100)}%` }}
@@ -121,15 +115,13 @@ export default function WaterHistoryPage() {
           </div>
         </div>
 
-        {notice && <p className="home-toast">{notice}</p>}
-
         <div className="home-toolbar-wrap">
           <HomeToolbar
             active="record"
             onSelect={(key) => {
               if (key === "home") navigate("/home");
+              else if (key === "routine") navigate("/routine");
               else if (key === "my") navigate("/mypage");
-              else if (key !== "record") showNotReady();
             }}
           />
         </div>
